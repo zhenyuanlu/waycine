@@ -613,6 +613,8 @@ export const copy = {
     licensesHint: 'Open the list of open-source licenses in a new tab',
     source: 'Source on GitHub',
     sourceHint: 'Open the Waycine repository on GitHub in a new tab',
+    author: 'Made by Zhenyuan Lu',
+    authorHint: "Open the author's website in a new tab",
   },
   welcome: {
     kicker: 'Welcome',

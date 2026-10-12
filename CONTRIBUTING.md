@@ -221,19 +221,13 @@ Before you open a pull request:
    package versions, runs the checks again and publishes `waycine`, then
    `waycine-cli`, to npm. It uses npm trusted publishing, so no npm token
    is stored in the repository; a version that is already on npm is skipped.
-9. First release only, or when the workflow cannot run: publish by hand with
-   two-factor authentication, `npm publish -w waycine --access public`, then
+9. When the workflow cannot run, publish by hand with two-factor
+   authentication: `npm publish -w waycine --access public`, then
    `npm publish -w waycine-cli --access public` (each package builds its
-   `dist/` first: `prepublishOnly` runs `tsc -b`). A trusted publisher can
-   only be set on a package that exists, so after the first publish open each
-   package's settings on npmjs.com and add the trusted publisher: GitHub
-   Actions, `zhenyuanlu` / `waycine`, workflow `release.yml`.
-10. First release only: once the site loads and both packages are on npm,
-    remove the "Pre-release" notes from `README.md`, `docs/cli.md` and
-    `docs/browser-support.md`, "pre-release" from the version badge in
-    `README.md` and the "Once published:" line above the install command in
-    `docs/cli.md`; check that the first CI run passed in
-    Chrome on Linux, as `docs/browser-support.md` says; commit.
+   `dist/` first: `prepublishOnly` runs `tsc -b`). A new package is always
+   published by hand once: a trusted publisher can only be set on a package
+   that exists (its settings on npmjs.com: GitHub Actions,
+   `zhenyuanlu` / `waycine`, workflow `release.yml`).
 
 A change to the project format that is not backward compatible also raises
 the schema version, adds a migration step and a new schema file (see

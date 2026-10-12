@@ -6,9 +6,6 @@ engine as the web app, draws with [`@napi-rs/canvas`](https://github.com/Brooooo
 and the bundled Barlow fonts, and encodes through an ffmpeg that you install
 yourself.
 
-> **Pre-release.** Nothing is published to npm yet. Until it is, run the CLI
-> from a clone of the repository (see [From source](#from-source)).
-
 ## Install
 
 Requirements:
@@ -17,8 +14,6 @@ Requirements:
 - For MP4 output: an ffmpeg build with the `libx264` encoder (most builds
   include it). Stills, PNG sequences and every other command work without
   ffmpeg.
-
-Once published:
 
 ```sh
 npm install -g waycine-cli

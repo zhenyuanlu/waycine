@@ -6,8 +6,6 @@ device. This page lists which browsers can export what, what happens when a
 browser lacks something, the known limits, and how to use the same export
 from your own code with `waycine/browser`.
 
-> **Pre-release.** The npm packages are not published yet.
-
 ## Support at a glance
 
 | Browser | Opens the app | Video export | Notes |

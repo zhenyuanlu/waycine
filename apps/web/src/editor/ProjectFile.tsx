@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'preact/hooks';
 import { type ValidationIssue, validateProject, type WaycineProject } from 'waycine';
 import { Dialog } from '../app/Dialog';
 import { UiIcon } from '../app/icons';
-import { LICENSES_URL, SOURCE_URL } from '../app/links';
+import { AUTHOR_URL, LICENSES_URL, SOURCE_URL } from '../app/links';
 import { copy } from '../copy/en';
 import { compactProject } from '../state/compact';
 import { commit, project, undo } from '../state/project';
@@ -249,6 +249,16 @@ export function ProjectFileBlock() {
           title={copy.projectFile.sourceHint}
         >
           {copy.projectFile.source}
+        </a>
+        {' · '}
+        <a
+          class="link"
+          href={AUTHOR_URL}
+          target="_blank"
+          rel="noopener"
+          title={copy.projectFile.authorHint}
+        >
+          {copy.projectFile.author}
         </a>
       </p>
     </div>

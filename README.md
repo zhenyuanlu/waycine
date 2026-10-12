@@ -10,7 +10,7 @@ Waycine ("way cinema") turns a list of stops into an animated travel map
 video of your trip, road trip, tour or race season.<br>
 Free and open source. It runs in your browser, and nothing is uploaded.
 
-[![Version 0.1.0, pre-release](https://img.shields.io/badge/version-0.1.0_pre--release-orange.svg)](CHANGELOG.md)
+[![Version 0.1.0](https://img.shields.io/badge/version-0.1.0-blue.svg)](CHANGELOG.md)
 [![waycine on npm](https://img.shields.io/npm/v/waycine.svg?label=npm)](https://www.npmjs.com/package/waycine)
 [![CI](https://github.com/zhenyuanlu/waycine/actions/workflows/ci.yml/badge.svg)](https://github.com/zhenyuanlu/waycine/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
@@ -33,10 +33,14 @@ Free and open source. It runs in your browser, and nothing is uploaded.
 
 </div>
 
-> **Pre-release.** Version 0.1.0 is being prepared. The web app is online; the
-> npm packages `waycine` and `waycine-cli` are not published yet, so until
-> they are, run the library and the CLI
-> [from source](docs/cli.md#from-source).
+## Why I built this
+
+Waycine started as one scene in a video I made about my dragon boat racing
+season: a map that draws the route from race to race. I thought that map
+could be useful to other people too, for a trip, a tour or a season of their
+own, so I rebuilt it as an open-source tool that anyone can use.
+
+Made by [Zhenyuan Lu](https://zhenyuanlu.com).
 
 ## Demos
 
@@ -139,15 +143,6 @@ Open **https://zhenyuanlu.com/waycine/**, then:
   editor autosaves and has undo.
 - **One engine** behind the web app, a TypeScript library for browsers and
   Node, and a command-line renderer.
-
-## Why I built this
-
-Waycine started as one scene in a video I made about my dragon boat racing
-season: a map that draws the route from race to race. I thought that map
-could be useful to other people too, for a trip, a tour or a season of their
-own, so I rebuilt it as an open-source tool that anyone can use.
-
-Made by [Zhenyuan Lu](https://github.com/zhenyuanlu).
 
 ## Use it as a library
 

@@ -7,8 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-Planned as 0.1.0, the first public release: the engine (`waycine`), the
-command-line renderer (`waycine-cli`) and the no-code web app.
+## [0.1.0] - 2026-10-12
+
+The first public release: the engine (`waycine`), the command-line renderer
+(`waycine-cli`) and the no-code web app.
 
 ### Added
 
@@ -59,7 +61,8 @@ command-line renderer (`waycine-cli`) and the no-code web app.
   also after a reload.
 - "Licenses" and "Source on GitHub" links at the end of the editor and in the
   File menu (the phone's More menu); the licenses open the third-party notices
-  the site serves. The header also links to the source with the GitHub mark.
+  the site serves. The header also links to the source with the GitHub mark,
+  and the end of the editor credits the author with a link to their website.
 - Autosave in the browser, recent projects, undo and redo (Ctrl+Z,
   Ctrl+Shift+Z), open and save `.waycine.json` files (Ctrl+O, Ctrl+S, or drop
   a file on the page), share links that carry the whole project in the
@@ -152,4 +155,5 @@ command-line renderer (`waycine-cli`) and the no-code web app.
   workflow that publishes both packages to npm when a GitHub release is
   published; a repository hygiene check.
 
-[Unreleased]: https://github.com/zhenyuanlu/waycine/commits/main
+[Unreleased]: https://github.com/zhenyuanlu/waycine/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/zhenyuanlu/waycine/releases/tag/v0.1.0
