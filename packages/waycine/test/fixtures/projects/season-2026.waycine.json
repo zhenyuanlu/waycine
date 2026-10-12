@@ -1,0 +1,195 @@
+{
+  "$schema": "https://zhenyuanlu.github.io/waycine/schema/v1.json",
+  "version": 1,
+  "meta": {
+    "name": "2026 Dragon Boat Season"
+  },
+  "stops": [
+    {
+      "id": "stop-1",
+      "city": "BOSTON",
+      "lat": 42.369,
+      "lon": -71.121,
+      "event": "HONG KONG DRAGON BOAT FESTIVAL",
+      "date": "2026-06-13",
+      "region": "MA",
+      "regionCode": "US-MA",
+      "country": "US",
+      "results": [
+        {
+          "medal": "gold",
+          "text": "500M  6TH  (1ST ALUMNI)",
+          "count": 1
+        },
+        {
+          "medal": "bronze",
+          "text": "200M  3RD",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "stop-2",
+      "city": "NEW YORK",
+      "lat": 41.147,
+      "lon": -73.917,
+      "event": "NEW YORK INTERNATIONAL DRAGON BOAT FESTIVAL",
+      "date": "2026-07-11",
+      "region": "NY",
+      "regionCode": "US-NY",
+      "country": "US",
+      "results": [
+        {
+          "medal": "ring",
+          "text": "2KM  QUALIFIED",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "stop-3",
+      "city": "SPRINGFIELD",
+      "lat": 42.1,
+      "lon": -72.59,
+      "event": "SPRINGFIELD DRAGON BOAT FESTIVAL",
+      "date": "2026-07-18",
+      "region": "MA",
+      "regionCode": "US-MA",
+      "country": "US"
+    },
+    {
+      "id": "stop-4",
+      "city": "FLUSHING",
+      "lat": 40.736,
+      "lon": -73.842,
+      "event": "FLUSHING MEADOWS DRAGON BOAT FESTIVAL",
+      "date": "2026-08-09",
+      "partner": "JOINT CREW LED BY FICTIONAL DRAGON BOAT TEAM",
+      "region": "NY",
+      "regionCode": "US-NY",
+      "country": "US",
+      "results": [
+        {
+          "medal": "gold",
+          "text": "1ST x2",
+          "count": 2
+        },
+        {
+          "medal": "bronze",
+          "text": "3RD x3",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "id": "stop-5",
+      "city": "HARTFORD",
+      "lat": 41.766,
+      "lon": -72.668,
+      "event": "RIVERFRONT DRAGON BOAT RACES",
+      "date": "2026-08-15",
+      "region": "CT",
+      "regionCode": "US-CT",
+      "country": "US",
+      "results": [
+        {
+          "medal": "silver",
+          "text": "500M  2ND",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "stop-6",
+      "city": "RHODE ISLAND",
+      "lat": 41.878,
+      "lon": -71.382,
+      "event": "RHODE ISLAND CHINESE DRAGON BOAT RACE",
+      "date": "2026-09-05",
+      "region": "RI",
+      "regionCode": "US-RI",
+      "country": "US",
+      "results": [
+        {
+          "medal": "gold",
+          "text": "1ST  DIVISION C",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "stop-7",
+      "city": "MERCER COUNTY",
+      "lat": 40.276,
+      "lon": -74.639,
+      "event": "MERCER COUNTY DRAGON BOAT FESTIVAL",
+      "date": "2026-09-19",
+      "region": "NJ",
+      "regionCode": "US-NJ",
+      "country": "US",
+      "results": [
+        {
+          "medal": "ring",
+          "text": "2KM  QUALIFIED",
+          "count": 1
+        }
+      ]
+    }
+  ],
+  "text": {
+    "title": "2026 SEASON ROUTE",
+    "subtitle": "{stops|RACE|RACES}  /  {regions|STATE|STATES}",
+    "kicker": "RACE {n:02} / {total:02}",
+    "solid": true
+  },
+  "fonts": {
+    "display": {
+      "widthAdjust": 0.89
+    },
+    "body": {
+      "widthAdjust": 1.15
+    }
+  },
+  "timing": {
+    "transition": {
+      "mode": "zoomThrough"
+    }
+  },
+  "pins": {
+    "label": {
+      "placement": "fixed"
+    }
+  },
+  "card": {
+    "backdrop": 0
+  },
+  "graticule": {
+    "clearLabels": false
+  },
+  "stats": {
+    "items": [
+      {
+        "source": "stops",
+        "label": "RACES",
+        "labelOne": "RACE"
+      },
+      {
+        "source": "regions",
+        "label": "STATES",
+        "labelOne": "STATE"
+      },
+      {
+        "source": "months",
+        "label": "MONTHS",
+        "labelOne": "MONTH"
+      }
+    ]
+  },
+  "output": {
+    "aspect": "16:9",
+    "shortSide": 1080,
+    "fps": 29.97,
+    "layout": "auto",
+    "exportMode": "single"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "@waycine/web",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Waycine no-code web app, a trip map video maker: edit a journey and export an animated travel map video (MP4) in the browser.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "e2e": "playwright test",
+    "preview:pages": "vite build --base /waycine/ && vite preview --base /waycine/"
+  },
+  "dependencies": {
+    "@preact/signals": "2.11.2",
+    "fflate": "0.8.3",
+    "preact": "10.29.8"
+  },
+  "devDependencies": {
+    "@babel/core": "7.29.7",
+    "@preact/preset-vite": "2.10.6"
+  }
+}

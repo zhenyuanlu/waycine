@@ -1,0 +1,10 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./packages/waycine" },
+    { "path": "./packages/cli" },
+    { "path": "./packages/cli/tsconfig.test.json" },
+    { "path": "./apps/web" },
+    { "path": "./tsconfig.tools.json" }
+  ]
+}

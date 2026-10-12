@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "meta": { "name": "Long names" },
+  "stops": [
+    {
+      "id": "wales",
+      "city": "Llanfairpwllgwyngyllgogerychwyrndrobwllllantysiliogogogoch",
+      "lat": 53.2239,
+      "lon": -4.1971,
+      "event": "The very long annual championship regatta of the island paddling clubs",
+      "date": "2026-08-01"
+    },
+    {
+      "id": "yorkshire",
+      "city": "Sutton-under-Whitestonecliffe",
+      "lat": 54.2465,
+      "lon": -1.2802,
+      "event": "Hill walk",
+      "date": "2026-08-08"
+    },
+    {
+      "id": "short",
+      "city": "Ely",
+      "lat": 52.3988,
+      "lon": 0.2627,
+      "event": "Cathedral",
+      "date": "2026-08-15"
+    }
+  ],
+  "output": { "aspect": "9:16", "shortSide": 720, "fps": 30 }
+}

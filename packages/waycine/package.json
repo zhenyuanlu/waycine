@@ -1,0 +1,86 @@
+{
+  "name": "waycine",
+  "version": "0.1.0",
+  "description": "Trip map video engine: turn a list of stops into an animated travel map video (a route that draws itself, stop cards, totals), in the browser or in Node.",
+  "license": "MIT",
+  "author": "Waycine contributors",
+  "homepage": "https://github.com/zhenyuanlu/waycine#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhenyuanlu/waycine.git",
+    "directory": "packages/waycine"
+  },
+  "bugs": {
+    "url": "https://github.com/zhenyuanlu/waycine/issues"
+  },
+  "type": "module",
+  "keywords": [
+    "map",
+    "video",
+    "animation",
+    "journey",
+    "travel",
+    "route",
+    "itinerary",
+    "canvas",
+    "mp4",
+    "webcodecs",
+    "map-animation",
+    "travel-video",
+    "travel-map",
+    "trip-map",
+    "route-animation",
+    "animated-map",
+    "map-video",
+    "video-maker",
+    "road-trip"
+  ],
+  "engines": {
+    "node": ">=22.12"
+  },
+  "sideEffects": false,
+  "main": "./dist/core/index.js",
+  "types": "./dist/core/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/core/index.d.ts",
+      "default": "./dist/core/index.js"
+    },
+    "./browser": {
+      "types": "./dist/browser/index.d.ts",
+      "default": "./dist/browser/index.js"
+    },
+    "./node": {
+      "types": "./dist/node/index.d.ts",
+      "default": "./dist/node/index.js"
+    },
+    "./fonts/*": "./fonts/*",
+    "./presets/*": "./presets/*",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "prepublishOnly": "tsc -b"
+  },
+  "files": [
+    "dist",
+    "fonts",
+    "presets",
+    "README.md",
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md"
+  ],
+  "dependencies": {
+    "mediabunny": "1.60.0"
+  },
+  "peerDependencies": {
+    "@napi-rs/canvas": "^1.0.9"
+  },
+  "peerDependenciesMeta": {
+    "@napi-rs/canvas": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@napi-rs/canvas": "1.0.9"
+  }
+}

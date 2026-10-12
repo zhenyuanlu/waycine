@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "meta": { "name": "One stop" },
+  "stops": [
+    {
+      "id": "reykjavik",
+      "city": "Reykjavik",
+      "lat": 64.1466,
+      "lon": -21.9426,
+      "event": "Northern lights weekend",
+      "date": "2026-02-13",
+      "endDate": "2026-02-15",
+      "country": "IS"
+    }
+  ],
+  "text": {
+    "title": "A weekend away",
+    "subtitle": "{stops|STOP|STOPS}  /  {days|DAY|DAYS}"
+  },
+  "stats": {
+    "items": [
+      { "source": "stops", "label": "STOPS", "labelOne": "STOP" },
+      { "source": "days", "label": "DAYS", "labelOne": "DAY" }
+    ]
+  },
+  "output": { "aspect": "1:1", "shortSide": 720, "fps": 30 }
+}

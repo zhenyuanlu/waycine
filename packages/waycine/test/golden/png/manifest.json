@@ -1,0 +1,5 @@
+{
+  "platform": "win32",
+  "arch": "x64",
+  "napiCanvas": "1.0.9"
+}

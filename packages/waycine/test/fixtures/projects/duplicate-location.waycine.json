@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "meta": { "name": "Back to Boston" },
+  "stops": [
+    {
+      "id": "boston-june",
+      "city": "Boston",
+      "lat": 42.369,
+      "lon": -71.121,
+      "event": "Spring regatta",
+      "date": "2026-06-13",
+      "regionCode": "US-MA",
+      "country": "US"
+    },
+    {
+      "id": "worcester",
+      "city": "Worcester",
+      "lat": 42.2626,
+      "lon": -71.8023,
+      "event": "Lake race",
+      "date": "2026-07-11",
+      "regionCode": "US-MA",
+      "country": "US"
+    },
+    {
+      "id": "boston-september",
+      "city": "Boston",
+      "lat": 42.36905,
+      "lon": -71.12104,
+      "event": "Autumn regatta",
+      "date": "2026-09-05",
+      "regionCode": "US-MA",
+      "country": "US"
+    }
+  ],
+  "output": { "aspect": "16:9", "shortSide": 720, "fps": 30 }
+}

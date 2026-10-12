@@ -1,0 +1,37 @@
+{
+  "name": "waycine-monorepo",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Waycine (way cinema): trip map video maker. Engine, CLI and no-code web app that turn a list of stops into an animated travel map video.",
+  "license": "MIT",
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "dev": "npm run dev -w @waycine/web",
+    "build": "tsc -b && npm run build -w @waycine/web",
+    "typecheck": "tsc -b",
+    "test": "vitest run",
+    "check": "biome ci . && node scripts/check-hygiene.mjs",
+    "verify": "npm run check && npm run typecheck && npm test && npm run build",
+    "e2e": "npm run e2e -w @waycine/web",
+    "bench": "node scripts/bench.mjs",
+    "golden:update": "node scripts/golden-update.mjs",
+    "docs:gen": "node scripts/gen-docs.mjs",
+    "fonts:metrics": "node scripts/gen-font-metrics.mjs"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@biomejs/biome": "2.5.14",
+    "@playwright/test": "1.63.0",
+    "@types/node": "24.19.0",
+    "typescript": "6.0.3",
+    "vite": "8.3.1",
+    "vitest": "5.0.2"
+  }
+}

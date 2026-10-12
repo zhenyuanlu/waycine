@@ -1,0 +1,23 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["ES2022", "DOM"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "types": ["vite/client"],
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
+    "noEmit": true,
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "paths": {
+      "waycine": ["../../packages/waycine/src/core/index.ts"],
+      "waycine/browser": ["../../packages/waycine/src/browser/index.ts"],
+      "waycine/presets/*": ["../../packages/waycine/presets/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "references": [
+    { "path": "../../packages/waycine/tsconfig.core.json" },
+    { "path": "../../packages/waycine/tsconfig.browser.json" }
+  ]
+}

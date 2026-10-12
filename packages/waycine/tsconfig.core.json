@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "lib": ["ES2022"],
+    "types": [],
+    "rootDir": "./src/core",
+    "outDir": "./dist/core",
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.core.tsbuildinfo"
+  },
+  "include": ["src/core/**/*.ts"]
+}

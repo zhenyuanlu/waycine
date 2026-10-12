@@ -1,0 +1,57 @@
+{
+  "name": "@waycine/cli",
+  "version": "0.1.0",
+  "description": "Command-line renderer for Waycine, the trip map video maker: animated travel map videos as MP4 (with your ffmpeg), clips, PNG frames and stills.",
+  "license": "MIT",
+  "author": "Waycine contributors",
+  "homepage": "https://github.com/zhenyuanlu/waycine/blob/main/docs/cli.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhenyuanlu/waycine.git",
+    "directory": "packages/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/zhenyuanlu/waycine/issues"
+  },
+  "type": "module",
+  "keywords": [
+    "waycine",
+    "cli",
+    "map",
+    "video",
+    "animation",
+    "journey",
+    "travel",
+    "route",
+    "mp4",
+    "ffmpeg",
+    "travel-map",
+    "trip-map",
+    "route-animation",
+    "map-video"
+  ],
+  "engines": {
+    "node": ">=22.12"
+  },
+  "bin": {
+    "waycine": "dist/bin.js"
+  },
+  "sideEffects": [
+    "./dist/bin.js"
+  ],
+  "scripts": {
+    "prepublishOnly": "tsc -b"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "@napi-rs/canvas": "1.0.9",
+    "waycine": "0.1.0"
+  }
+}

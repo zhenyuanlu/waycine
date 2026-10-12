@@ -1,0 +1,567 @@
+/* biome-ignore-all lint/style/noDescendingSpecificity: rules are grouped by component, not by specificity; component rules never rely on cascade order against another component's selectors. */
+/* Export dialog: one fixed-height frame shared by every state.
+   Tokens, buttons, fields and segmented tiles come from the app stylesheet.
+   This sheet is reached through the App import, so it is emitted before the app
+   stylesheet: an override of an app rule must win on specificity, never on order. */
+
+.xdlg {
+  width: min(56rem, calc(100vw - 32px));
+  height: min(54rem, calc(100dvh - 32px));
+  overflow: hidden;
+}
+.x-body {
+  height: 100%;
+  display: grid;
+  /* One column that text can never widen past the dialog (a long file name wraps instead). */
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto minmax(0, 1fr) 7rem 3rem;
+  padding: var(--s5) var(--s6);
+}
+
+/* Body: thumbnail column | spec table. */
+.x-main {
+  position: relative;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 15rem minmax(0, 1fr);
+  column-gap: var(--s5);
+  padding-top: var(--s4);
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  align-items: start;
+}
+.x-prev {
+  display: grid;
+  gap: var(--s2);
+  justify-items: start;
+}
+/* The box follows the format (16:9 down to 4:5); a taller picture is pillarboxed on the sunk
+   colour, and the picture itself is placed and edged like the stage's plate. */
+.x-thumb {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: var(--sunk);
+  overflow: hidden;
+}
+.x-thumb canvas,
+.x-thumb video {
+  position: absolute;
+  background: var(--plate);
+  object-fit: contain;
+  display: block;
+  outline: 1px solid var(--ink-4);
+  outline-offset: -1px;
+}
+.x-cap {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s2);
+}
+.x-prev figcaption {
+  width: 16ch;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+
+.dl {
+  display: grid;
+  grid-template-columns: var(--lab-w) minmax(0, 1fr);
+  column-gap: var(--s3);
+}
+.dl > dt,
+.dl > dd {
+  margin: 0;
+  min-height: calc(38rem / 13);
+  padding: var(--s2) 0;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+}
+.dl > dt {
+  color: var(--ink-3);
+  align-items: flex-start;
+  padding-top: calc(var(--s2) + 2px);
+}
+.dl > dd {
+  gap: var(--s3);
+  flex-wrap: wrap;
+  min-width: 0;
+}
+.dl > dd .aside {
+  margin-left: auto;
+  color: var(--ink-3);
+  font-size: var(--fs-s);
+}
+.dl > dd .x-size {
+  flex: none;
+  width: 12ch;
+  margin-left: auto;
+  color: var(--ink-3);
+  font-size: var(--fs-s);
+  white-space: nowrap;
+}
+.dl .seg.x-fmt {
+  grid-auto-columns: calc(46rem / 13);
+}
+.dl .seg.x-fmt > button {
+  padding: 0;
+}
+/* After setup the same controls stay, locked: the choice stays marked, the rest recedes. */
+.dl.is-locked .seg > button[aria-checked="true"] {
+  color: var(--accent-ink);
+}
+.dl.is-locked .seg > button[aria-checked="true"] .seg-s {
+  color: var(--accent-ink);
+}
+.opt.is-locked {
+  cursor: default;
+}
+.opt.is-locked input {
+  cursor: default;
+}
+.opt.is-locked:has(input:not(:checked)) {
+  color: var(--ink-4);
+}
+.opt.is-locked:has(input:not(:checked)) .muted {
+  color: var(--ink-4);
+}
+.opt input:disabled:not(:checked) {
+  border-color: var(--line-2);
+}
+.dl .seg.tiles {
+  display: grid;
+  width: 100%;
+  height: auto;
+  min-height: calc(44rem / 13);
+}
+.dl .seg.tiles > button {
+  padding: var(--s1) calc(4rem / 13);
+  line-height: 1.25;
+}
+.x-file {
+  min-width: 0;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.x-note {
+  width: 100%;
+  color: var(--ink-3);
+  font-size: var(--fs-s);
+}
+.opts {
+  display: grid;
+  row-gap: var(--s2);
+  width: 100%;
+}
+/* .opt is also the place-search result row in the app stylesheet; that rule is emitted later and wins at equal specificity. */
+.opt {
+  display: grid;
+  grid-template-columns: calc(16rem / 13) minmax(0, 1fr);
+  column-gap: var(--s2);
+  align-items: start;
+  cursor: pointer;
+}
+.opt input {
+  -webkit-appearance: none;
+  appearance: none;
+  width: calc(16rem / 13);
+  height: calc(16rem / 13);
+  margin: 2px 0 0;
+  border: 1px solid var(--field);
+  border-radius: 50%;
+  background: var(--surface);
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+}
+.opt input:checked {
+  border-color: var(--accent-mark);
+}
+.opt input:checked::after {
+  content: "";
+  width: calc(8rem / 13);
+  height: calc(8rem / 13);
+  border-radius: 50%;
+  background: var(--accent-mark);
+}
+.opt input:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+.opt b {
+  font-weight: 600;
+}
+.opt .muted {
+  display: block;
+  font-size: var(--fs-s);
+}
+.opt.is-disabled {
+  color: var(--ink-4);
+  cursor: default;
+}
+
+/* Status band: a fixed height in every state. Progress, done, stopped and failed share one
+   three-row grid (headline, bar, meta), so the bar stays on one line when the export ends. */
+.x-band {
+  --x-h1: calc(40rem / 13);
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  padding-top: var(--s3);
+  display: grid;
+  align-content: start;
+  gap: var(--s2);
+  border-top: 1px solid var(--line);
+}
+.x-band > * {
+  min-width: 0;
+}
+.x-band.is-run {
+  grid-template-rows: var(--x-h1) 3px auto;
+}
+.x-head {
+  align-self: end;
+  min-width: 0;
+}
+/* The progress headline fills its fixed row; its one line sits at the bottom of it. */
+.x-band.is-run > .x-prog {
+  align-self: stretch;
+  flex-wrap: wrap;
+  align-content: flex-end;
+  overflow: hidden;
+}
+.x-sum {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s3);
+  min-width: 0;
+}
+.export-summary {
+  flex: 1;
+  min-width: 0;
+  color: var(--ink-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.x-msg {
+  min-height: calc(36rem / 13);
+  font-size: var(--fs-s);
+  overflow: hidden;
+}
+.x-banner {
+  padding-left: var(--s2);
+  border-left: 2px solid var(--warn);
+  font-size: var(--fs-s);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.x-banner.danger {
+  border-left-color: var(--danger);
+}
+.x-tech {
+  position: relative;
+  flex: none;
+  font-size: var(--fs-s);
+}
+.x-tech summary {
+  cursor: pointer;
+  color: var(--ink-2);
+  list-style: none;
+  text-decoration: underline;
+  text-decoration-color: var(--line-2);
+  text-underline-offset: 3px;
+}
+.x-tech summary::-webkit-details-marker {
+  display: none;
+}
+.x-tech .export-codec {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 6px);
+  z-index: 5;
+  width: max-content;
+  max-width: 24rem;
+  padding: var(--s2) var(--s3);
+  background: var(--surface);
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 14rem;
+  overflow: auto;
+}
+.x-tech.wide .export-codec {
+  font-family: var(--font-mono);
+  left: 0;
+  right: auto;
+  max-width: 40rem;
+}
+
+.x-prog {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s4);
+}
+.x-pct {
+  flex: none;
+  width: 4ch;
+  white-space: nowrap;
+  font: 700 var(--fs-num) / 1 var(--font-display);
+  letter-spacing: 0.01em;
+}
+/* Three fixed digit cells: the number repaints in place, the % sign never moves. */
+.x-pct .n {
+  display: inline-flex;
+}
+.x-pct .n > i {
+  display: inline-block;
+  width: 1ch;
+  font-style: normal;
+}
+.x-pct small {
+  font-size: 0.5em;
+  margin-left: 2px;
+  color: var(--ink-3);
+}
+.x-lines {
+  flex: 1 1 0;
+  display: grid;
+  row-gap: 2px;
+  color: var(--ink-2);
+  min-width: 0;
+}
+.x-lines > span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.x-lines .muted {
+  font-size: var(--fs-s);
+}
+.x-bar {
+  display: flex;
+  gap: 2px;
+  height: 3px;
+}
+.x-bar > i {
+  flex: 1 1 0;
+  position: relative;
+  overflow: hidden;
+  background: var(--line);
+}
+.x-bar > i > b {
+  position: absolute;
+  inset: 0;
+  background: var(--accent-mark);
+  transform-origin: 0 50%;
+}
+.x-bar > i.d > b {
+  background: var(--ink-2);
+}
+.x-bar.frozen > i > b {
+  background: var(--ink-4);
+}
+.x-bar.full > i > b {
+  background: var(--ink-2);
+}
+.x-bar.failed {
+  height: 2px;
+  background: var(--danger);
+}
+.x-meta {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s3);
+  min-width: 0;
+  color: var(--ink-3);
+  font-size: var(--fs-s);
+  white-space: nowrap;
+}
+.x-meta > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* Boxes that fill their share of the line: changing text repaints in place. */
+.x-meta > span:first-child {
+  flex: 1 1 0;
+}
+/* "About 0:21 left" in a fixed slot at the right, its text starting at a fixed x. */
+.x-meta > .x-left {
+  flex: none;
+  width: 16ch;
+}
+.x-done-file {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.x-done-file b {
+  font-weight: 600;
+}
+.x-err {
+  color: var(--danger);
+}
+.x-play {
+  flex: none;
+}
+
+/* Footer: a note or links on the left, the buttons on the right. */
+.x-foot {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  min-width: 0;
+}
+.x-foot-l {
+  flex: 1 1 0;
+  min-width: 0;
+  display: grid;
+}
+.x-foot-note {
+  color: var(--ink-3);
+  font-size: var(--fs-s);
+  line-height: 1.35;
+}
+.x-links {
+  display: flex;
+  gap: var(--s3);
+  flex-wrap: wrap;
+}
+/* Both halves fill their share, so neither box moves when its buttons change. */
+.x-foot-r {
+  flex: 1 1 0;
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--s2);
+}
+
+/* Short laptop screens: tighter rows, so the whole table shows at 1280 x 720. */
+@media (max-height: 760px) and (min-width: 1024px) {
+  .x-body {
+    padding: var(--s4) var(--s6);
+  }
+  .dl > dt,
+  .dl > dd {
+    min-height: calc(34rem / 13);
+    padding: var(--s1) 0;
+  }
+  .dl > dt {
+    padding-top: calc(var(--s1) + calc(4rem / 13));
+  }
+  .opts {
+    row-gap: var(--s1);
+  }
+}
+
+@media (max-width: 1023px) {
+  .dl .seg.x-fmt {
+    display: grid;
+    width: 100%;
+    grid-auto-columns: minmax(0, 1fr);
+  }
+  .xdlg {
+    width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+  }
+  .x-body {
+    padding: 16px;
+    grid-template-rows: auto auto minmax(0, 1fr) 132px 116px;
+  }
+  .x-main {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: var(--s3);
+  }
+  .dl {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .dl > dt {
+    border-bottom: 0;
+    min-height: 0;
+    padding-bottom: 0;
+    font-size: 13px;
+  }
+  /* Four size tiles cannot show "1920 × 1080" in a quarter of a phone: two per row. */
+  .dl .seg.tiles:has(> button:nth-child(4)) {
+    grid-auto-flow: row;
+    grid-template-columns: 1fr 1fr;
+  }
+  .dl .seg.tiles:has(> button:nth-child(4)) > button:nth-child(3) {
+    border-left: 0;
+  }
+  .dl .seg.tiles:has(> button:nth-child(4)) > button:nth-child(n + 3) {
+    border-top: 1px solid var(--line-2);
+  }
+  .x-band {
+    --x-h1: 44px;
+  }
+  /* Phone lines wrap inside the fixed band instead of widening the sheet. */
+  .x-sum {
+    flex-wrap: wrap;
+    row-gap: 2px;
+  }
+  .export-summary {
+    flex-basis: 100%;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+  .x-done-file {
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+  .x-done-file b {
+    overflow-wrap: anywhere;
+  }
+  .x-meta {
+    flex-wrap: wrap;
+    white-space: normal;
+    row-gap: var(--s1);
+  }
+  .x-meta > span:first-child {
+    flex-basis: 100%;
+  }
+  .x-meta > .x-left {
+    width: auto;
+    flex: 1 1 100%;
+  }
+  .x-foot {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) 44px;
+    row-gap: var(--s2);
+    padding-top: var(--s2);
+  }
+  .x-foot-l {
+    align-content: end;
+  }
+  .x-foot-r {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+  }
+  .x-foot-r > * {
+    height: 44px;
+    min-width: 0;
+  }
+  .x-foot-l .x-still {
+    justify-self: start;
+    height: 44px;
+    padding: 0;
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--line-2);
+    text-underline-offset: 3px;
+  }
+}

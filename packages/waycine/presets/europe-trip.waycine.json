@@ -1,0 +1,151 @@
+{
+  "$schema": "https://zhenyuanlu.github.io/waycine/schema/v1.json",
+  "version": 1,
+  "meta": {
+    "name": "Europe trip demo"
+  },
+  "stops": [
+    {
+      "id": "lisbon",
+      "city": "Lisbon",
+      "lat": 38.7223,
+      "lon": -9.1393,
+      "event": "Trams, tiles and sunset viewpoints",
+      "date": "2026-06-20",
+      "endDate": "2026-06-23",
+      "country": "PT"
+    },
+    {
+      "id": "madrid",
+      "city": "Madrid",
+      "lat": 40.4168,
+      "lon": -3.7038,
+      "event": "Art museums and late dinners",
+      "date": "2026-06-24",
+      "endDate": "2026-06-26",
+      "country": "ES"
+    },
+    {
+      "id": "barcelona",
+      "city": "Barcelona",
+      "lat": 41.3874,
+      "lon": 2.1686,
+      "event": "Beach days and modernist architecture",
+      "date": "2026-06-27",
+      "endDate": "2026-06-30",
+      "country": "ES"
+    },
+    {
+      "id": "paris",
+      "city": "Paris",
+      "lat": 48.8566,
+      "lon": 2.3522,
+      "event": "Cafes, galleries and the river",
+      "date": "2026-07-02",
+      "endDate": "2026-07-05",
+      "country": "FR"
+    },
+    {
+      "id": "amsterdam",
+      "city": "Amsterdam",
+      "lat": 52.3676,
+      "lon": 4.9041,
+      "event": "Canals by bike",
+      "date": "2026-07-06",
+      "endDate": "2026-07-08",
+      "country": "NL"
+    },
+    {
+      "id": "berlin",
+      "city": "Berlin",
+      "lat": 52.52,
+      "lon": 13.405,
+      "event": "History walks and street food",
+      "date": "2026-07-09",
+      "endDate": "2026-07-12",
+      "country": "DE"
+    },
+    {
+      "id": "prague",
+      "city": "Prague",
+      "lat": 50.0755,
+      "lon": 14.4378,
+      "event": "Old town and castle hill",
+      "date": "2026-07-13",
+      "endDate": "2026-07-15",
+      "country": "CZ"
+    },
+    {
+      "id": "vienna",
+      "city": "Vienna",
+      "lat": 48.2082,
+      "lon": 16.3738,
+      "event": "Concerts and coffee houses",
+      "date": "2026-07-16",
+      "endDate": "2026-07-19",
+      "country": "AT"
+    }
+  ],
+  "text": {
+    "title": "Europe summer 2026",
+    "subtitle": "{stops|CITY|CITIES}  /  {countries|COUNTRY|COUNTRIES}  /  {km} KM",
+    "kicker": "City {n:02} / {total:02}"
+  },
+  "theme": {
+    "id": "midnight-cyan",
+    "background": "#050A10",
+    "grid": "#FFFFFF",
+    "route": "#7DD3FC",
+    "glow": "#075985",
+    "pin": "#38BDF8",
+    "pinCore": "#FFFFFF",
+    "text": "#FFFFFF",
+    "accent": "#38BDF8",
+    "flash": "#FFFFFF",
+    "medals": {
+      "gold": "#E8C15A",
+      "silver": "#CFD4DC",
+      "bronze": "#CD8C5C",
+      "ring": "#38BDF8"
+    }
+  },
+  "timing": {
+    "stopSec": 2,
+    "transition": {
+      "mode": "fly"
+    }
+  },
+  "stats": {
+    "items": [
+      {
+        "source": "stops",
+        "label": "CITIES",
+        "labelOne": "CITY"
+      },
+      {
+        "source": "countries",
+        "label": "COUNTRIES",
+        "labelOne": "COUNTRY"
+      },
+      {
+        "source": "km",
+        "label": "KM"
+      }
+    ]
+  },
+  "layouts": {
+    "portrait": {
+      "fit": {
+        "marginY": 1220,
+        "offsetDu": [0, 170]
+      }
+    }
+  },
+  "output": {
+    "aspect": "9:16",
+    "shortSide": 1080,
+    "fps": 30,
+    "layout": "auto",
+    "exportMode": "single"
+  }
+}

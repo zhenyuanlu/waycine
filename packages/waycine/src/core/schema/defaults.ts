@@ -1,0 +1,253 @@
+import { BUNDLED_FONTS } from '../fonts.js';
+import { cloneJson, deepFreeze } from './json.js';
+import { DEFAULT_LAYOUTS } from './layouts.js';
+import { ORCHID } from './themes.js';
+import { SCHEMA_VERSION, type WaycineProject } from './types.js';
+
+/**
+ * Seconds that give exactly `frames` frames at the original 30000/1001 fps
+ * (`round(sec * fps)` returns `frames`). Keeps the defaults frame-exact.
+ */
+function ntscFrames(frames: number): number {
+  return (frames * 1001) / 30000;
+}
+
+/**
+ * Engine defaults: the original renderer's constants with the Orchid theme
+ * and generic text. Deep-frozen; use
+ * `createDefaultProject()` for a mutable copy. `stops` is empty: a project
+ * needs at least one stop of its own.
+ */
+export const DEFAULTS: WaycineProject = deepFreeze<WaycineProject>({
+  version: SCHEMA_VERSION,
+  meta: { name: 'Untitled journey' },
+  stops: [],
+  text: {
+    title: 'MY JOURNEY',
+    subtitle: '{stops|STOP|STOPS}  /  {km} KM',
+    description: '',
+    descriptionAt: 'intro',
+    kicker: 'STOP {n:02} / {total:02}',
+    cardDate: 'YYYY.MM.DD',
+    pinDate: 'MM.DD',
+    rangeSeparator: ' - ',
+    pinDateJoin: ' / ',
+    uppercase: true,
+    solid: false,
+  },
+  theme: cloneJson(ORCHID),
+  fonts: {
+    display: {
+      family: BUNDLED_FONTS.display.family,
+      weight: BUNDLED_FONTS.display.weight,
+      source: 'bundled',
+      sizeAdjust: 1,
+      widthAdjust: 1,
+    },
+    body: {
+      family: BUNDLED_FONTS.body.family,
+      weight: BUNDLED_FONTS.body.weight,
+      source: 'bundled',
+      sizeAdjust: 1,
+      widthAdjust: 1,
+    },
+  },
+  timing: {
+    overviewSec: ntscFrames(80),
+    stopSec: ntscFrames(40),
+    finaleSec: ntscFrames(80),
+    endHoldSec: 0,
+    overview: {
+      enabled: true,
+      routeEndFrac: 0.7,
+      pushIn: 0.05,
+      titleFadeSec: ntscFrames(8),
+      pulseWindow: 0.8,
+      pulseRate: 1.4,
+      outroSec: ntscFrames(8),
+    },
+    stop: {
+      flyFrac: 0.42,
+      zoomFrac: 0.22,
+      pinLightAt: 0.8,
+      pulseDurFrac: 0.45,
+      labelDelaySec: ntscFrames(3),
+      labelFadeSec: ntscFrames(6),
+      cardFadeOutSec: ntscFrames(6),
+    },
+    transition: {
+      mode: 'zoomThrough',
+      zoomGain: 7,
+      zoomExp: 2.2,
+      blurMax: 6,
+      blurExp: 2,
+      whiteStart: 0.55,
+      whiteExp: 1.5,
+      recoverSec: ntscFrames(6),
+      flashTo: 'color',
+    },
+    finale: {
+      enabled: true,
+      cameraEndFrac: 0.55,
+      pulseStart: 0.3,
+      pulseDur: 0.5,
+      pulseStagger: 0.06,
+      pinLabelsAfter: 0.6,
+      statsStart: 0.35,
+      statsDur: 0.3,
+      statsRate: 2.2,
+      statsStagger: 0.35,
+    },
+  },
+  camera: {
+    stampZoom: 2.3,
+    flyZoomOut: 0.25,
+    finaleZoom: 0.92,
+    minSpanDeg: 0.02,
+    flyEasing: 'inOutSine',
+    fadeEasing: 'outCubic',
+    zoomInterp: 'linear',
+  },
+  route: {
+    show: true,
+    coreWidth: 3,
+    glowWidth: 16,
+    glowBlur: 10,
+    glowOpacity: 1,
+    bulge: 0.22,
+    bulgeSide: 'right',
+    samples: 24,
+  },
+  pins: {
+    radius: 9,
+    haloPad: 4,
+    haloAlpha: 120 / 255,
+    rings: [0, 0.35],
+    ringStart: 10,
+    ringGrow: 60,
+    ringWidth: 3,
+    ringAlpha: 230 / 255,
+    medalShine: 0.35,
+    ringMedalWidth: 0.35,
+    label: {
+      show: true,
+      placement: 'auto',
+      dx: 18,
+      cityDy: -30,
+      dateDy: -4,
+      citySize: 24,
+      cityTracking: 1,
+      dateSize: 20,
+      alpha: 230 / 255,
+      medalGap: 14,
+      medalR: 7,
+      medalStep: 17,
+      medalDy: 8,
+      medalAlpha: 235 / 255,
+    },
+  },
+  card: {
+    show: true,
+    showKicker: true,
+    showEvent: true,
+    showDate: true,
+    showPartner: true,
+    showResults: true,
+    slide: 40,
+    backdrop: 0.85,
+    leaderAlpha: 0.6,
+    leaderWidth: 2,
+    barWidth: 6,
+    barDx: -12,
+    kicker: { dx: 12, dy: -4, size: 26, tracking: 3, alpha: 1 },
+    city: {
+      dx: 8,
+      dy: 30,
+      size: 118,
+      tracking: 2,
+      alpha: 1,
+      minSize: 60,
+      shrinkStep: 6,
+      fitMaxW: -170,
+      measureTracking: false,
+    },
+    event: {
+      dx: 12,
+      dy: 162,
+      size: 30,
+      tracking: 2,
+      alpha: 0.92,
+      minSize: 20,
+      shrinkStep: 2,
+      fitMaxW: -180,
+      measureTracking: true,
+    },
+    date: { dx: 12, dy: 202, size: 24, tracking: 2, alpha: 1 },
+    rowsY: 244,
+    line: {
+      dx: 12,
+      size: 27,
+      tracking: 2,
+      alpha: 0.9,
+      partnerLineH: 34,
+      resultRowH: 36,
+      medalR: 10,
+      medalDx: 10,
+      medalDy: 15,
+      textDx: 26,
+      inlineGap: 26,
+    },
+    bar: { base: 236, perResult: 36 },
+  },
+  stats: {
+    show: true,
+    labelSize: 52,
+    labelTracking: 2,
+    items: [
+      { source: 'stops', label: 'STOPS', labelOne: 'STOP' },
+      { source: 'countries', label: 'COUNTRIES', labelOne: 'COUNTRY' },
+      { source: 'km', label: 'KM' },
+    ],
+  },
+  graticule: {
+    show: true,
+    stepMode: 'auto',
+    fixedStep: 0.25,
+    targetSpacing: 63,
+    zoomSplit: 1.8,
+    maxSubdiv: 1,
+    lineWidth: 1,
+    minorAlpha: 12 / 255,
+    majorAlpha: 34 / 255,
+    labels: true,
+    clearLabels: true,
+    labelSize: 18,
+    labelAlpha: 90 / 255,
+    lonLabelOffset: [5, 18],
+    latLabelOffset: [18, 4],
+    labelFormat: 'plain',
+  },
+  hud: {
+    corners: true,
+    cornerLen: 40,
+    cornerMargin: 28,
+    cornerWidth: 2,
+    cornerAlpha: 120 / 255,
+  },
+  output: {
+    aspect: '16:9',
+    shortSide: 1080,
+    fps: 29.97,
+    supersample: 1,
+    layout: 'auto',
+    quality: 'high',
+    bitrateMbps: 0,
+    exportMode: 'single',
+  },
+  layouts: cloneJson(DEFAULT_LAYOUTS),
+});
+
+/** A fresh, mutable deep copy of `DEFAULTS`. */
+export function createDefaultProject(): WaycineProject {
+  return cloneJson(DEFAULTS);
+}

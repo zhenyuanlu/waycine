@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "meta": { "name": "Pacific crossing" },
+  "stops": [
+    {
+      "id": "tokyo",
+      "city": "Tokyo",
+      "lat": 35.6762,
+      "lon": 139.6503,
+      "event": "Departure",
+      "date": "2026-05-01",
+      "country": "JP"
+    },
+    {
+      "id": "honolulu",
+      "city": "Honolulu",
+      "lat": 21.3099,
+      "lon": -157.8581,
+      "event": "Island stopover",
+      "date": "2026-05-02",
+      "endDate": "2026-05-05",
+      "regionCode": "US-HI",
+      "country": "US"
+    },
+    {
+      "id": "san-francisco",
+      "city": "San Francisco",
+      "lat": 37.7749,
+      "lon": -122.4194,
+      "event": "Arrival",
+      "date": "2026-05-06",
+      "regionCode": "US-CA",
+      "country": "US"
+    }
+  ],
+  "text": {
+    "title": "Across the Pacific",
+    "subtitle": "{stops|STOP|STOPS}  /  {km} KM  /  {mi} MI"
+  },
+  "stats": {
+    "items": [
+      { "source": "stops", "label": "STOPS", "labelOne": "STOP" },
+      { "source": "countries", "label": "COUNTRIES", "labelOne": "COUNTRY" },
+      { "source": "km", "label": "KM" }
+    ]
+  },
+  "output": { "aspect": "16:9", "shortSide": 720, "fps": 30 }
+}

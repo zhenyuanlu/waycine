@@ -1,0 +1,165 @@
+{
+  "$schema": "https://zhenyuanlu.github.io/waycine/schema/v1.json",
+  "version": 1,
+  "meta": {
+    "name": "Day trip demo"
+  },
+  "stops": [
+    {
+      "id": "waterfront",
+      "city": "V&A Waterfront",
+      "lat": -33.9036,
+      "lon": 18.4207,
+      "event": "Coffee on the quay",
+      "date": "2026-11-14",
+      "dateText": "07:30",
+      "country": "ZA"
+    },
+    {
+      "id": "camps-bay",
+      "city": "Camps Bay",
+      "lat": -33.9508,
+      "lon": 18.3776,
+      "event": "A swim under the Twelve Apostles",
+      "date": "2026-11-14",
+      "dateText": "08:45",
+      "country": "ZA"
+    },
+    {
+      "id": "hout-bay",
+      "city": "Hout Bay",
+      "lat": -34.048,
+      "lon": 18.355,
+      "event": "Seals in the harbour",
+      "date": "2026-11-14",
+      "dateText": "10:00",
+      "country": "ZA",
+      "hidden": true
+    },
+    {
+      "id": "chapmans-peak",
+      "city": "Chapman's Peak",
+      "lat": -34.0867,
+      "lon": 18.36,
+      "event": "The road cut into the cliff",
+      "date": "2026-11-14",
+      "dateText": "10:30",
+      "country": "ZA"
+    },
+    {
+      "id": "cape-point",
+      "city": "Cape Point",
+      "lat": -34.3568,
+      "lon": 18.4974,
+      "event": "The lighthouse at the end of the road",
+      "date": "2026-11-14",
+      "dateText": "12:30",
+      "country": "ZA",
+      "durationSec": 3
+    },
+    {
+      "id": "boulders-beach",
+      "city": "Boulders Beach",
+      "lat": -34.1973,
+      "lon": 18.4513,
+      "event": "Penguins on the sand",
+      "date": "2026-11-14",
+      "dateText": "14:30",
+      "country": "ZA"
+    },
+    {
+      "id": "muizenberg",
+      "city": "Muizenberg",
+      "lat": -34.1075,
+      "lon": 18.4702,
+      "event": "Surfers and beach huts",
+      "date": "2026-11-14",
+      "dateText": "16:00",
+      "country": "ZA"
+    },
+    {
+      "id": "stellenbosch",
+      "city": "Stellenbosch",
+      "lat": -33.9321,
+      "lon": 18.8602,
+      "event": "Dinner in the winelands",
+      "date": "2026-11-14",
+      "dateText": "18:30",
+      "country": "ZA"
+    }
+  ],
+  "text": {
+    "title": "A day around the Cape",
+    "subtitle": "{stops|stop|stops}  /  {km} km  /  one day",
+    "kicker": "Stop {n} of {total}",
+    "uppercase": false
+  },
+  "theme": {
+    "id": "mono",
+    "background": "#0A0A0A",
+    "grid": "#FFFFFF",
+    "route": "#F2F2F2",
+    "glow": "#3A3A3A",
+    "pin": "#BDBDBD",
+    "pinCore": "#FFFFFF",
+    "text": "#FFFFFF",
+    "accent": "#BDBDBD",
+    "flash": "#FFFFFF",
+    "medals": {
+      "gold": "#E8C15A",
+      "silver": "#CFD4DC",
+      "bronze": "#CD8C5C",
+      "ring": "#BDBDBD"
+    }
+  },
+  "timing": {
+    "stopSec": 1.6,
+    "transition": {
+      "mode": "fly"
+    }
+  },
+  "stats": {
+    "items": [
+      {
+        "source": "stops",
+        "label": "stops",
+        "labelOne": "stop"
+      },
+      {
+        "source": "km",
+        "label": "km"
+      },
+      {
+        "source": "custom",
+        "label": "hours",
+        "value": "11"
+      }
+    ]
+  },
+  "graticule": {
+    "labelFormat": "degree"
+  },
+  "hud": {
+    "corners": false
+  },
+  "layouts": {
+    "portrait": {
+      "fit": {
+        "marginY": 560,
+        "offsetDu": [0, 110]
+      },
+      "stats": {
+        "direction": "row",
+        "pitch": 330,
+        "y": 170
+      }
+    }
+  },
+  "output": {
+    "aspect": "4:5",
+    "shortSide": 1080,
+    "fps": 25,
+    "layout": "auto",
+    "exportMode": "single"
+  }
+}

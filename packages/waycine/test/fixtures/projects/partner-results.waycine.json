@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "meta": { "name": "Partner and results" },
+  "stops": [
+    {
+      "id": "boston",
+      "city": "Boston",
+      "lat": 42.369,
+      "lon": -71.121,
+      "event": "Harbor festival",
+      "date": "2026-06-13",
+      "partner": "Joint crew with the harbor rowing club and friends",
+      "results": [
+        { "medal": "gold", "text": "500M  1ST", "count": 2 },
+        { "medal": "silver", "text": "200M  2ND" },
+        { "medal": "bronze", "text": "2KM  3RD", "count": 3 },
+        { "medal": "ring", "text": "MIXED  QUALIFIED" }
+      ]
+    },
+    {
+      "id": "providence",
+      "city": "Providence",
+      "lat": 41.824,
+      "lon": -71.4128,
+      "event": "River sprint",
+      "date": "2026-07-04",
+      "partner": "Guest paddlers",
+      "results": [{ "medal": "none", "text": "FINISHED" }]
+    }
+  ],
+  "output": { "aspect": "16:9", "shortSide": 720, "fps": 30 }
+}

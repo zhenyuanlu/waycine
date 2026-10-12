@@ -1,0 +1,3142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zhenyuanlu.github.io/waycine/schema/v1.json",
+  "title": "Waycine project",
+  "description": "A Waycine project file (.waycine.json), schema version 1, as of Waycine 0.1.0. Every setting except version and stops is optional and defaults to the value given here. Generated from the settings catalog by scripts/gen-docs.mjs.",
+  "type": "object",
+  "required": ["version", "stops"],
+  "properties": {
+    "$schema": {
+      "description": "URL of this schema, for editors.",
+      "type": "string"
+    },
+    "version": {
+      "description": "Schema version of the file. This schema describes version 1.",
+      "const": 1
+    },
+    "meta": {
+      "type": "object",
+      "description": "Project metadata.",
+      "properties": {
+        "name": {
+          "title": "Project name",
+          "description": "Name of the project; exported files are named after it.",
+          "type": "string",
+          "default": "Untitled journey"
+        }
+      },
+      "additionalProperties": false
+    },
+    "stops": {
+      "title": "Stops",
+      "description": "Stops in video order, at most 99; at least one must be visible.",
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 99,
+      "items": {
+        "type": "object",
+        "description": "One stop. Only city, lat and lon are needed.",
+        "properties": {
+          "id": {
+            "title": "Stop id",
+            "description": "Stable identifier of the stop, used by the app and in links.",
+            "type": "string"
+          },
+          "city": {
+            "title": "City",
+            "description": "Place name shown on the card and next to the pin.",
+            "type": "string"
+          },
+          "lat": {
+            "title": "Latitude",
+            "description": "Degrees north (negative for south). Unit: deg.",
+            "type": "number",
+            "minimum": -85.05,
+            "maximum": 85.05
+          },
+          "lon": {
+            "title": "Longitude",
+            "description": "Degrees east (negative for west). Unit: deg.",
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180
+          },
+          "event": {
+            "title": "Event",
+            "description": "Line under the city on the stop card.",
+            "type": "string"
+          },
+          "date": {
+            "title": "Date",
+            "description": "Date of the stop (YYYY-MM-DD).",
+            "type": "string",
+            "format": "date",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+          },
+          "endDate": {
+            "title": "End date",
+            "description": "Optional last day; the card then shows a date range.",
+            "type": "string",
+            "format": "date",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+          },
+          "dateText": {
+            "title": "Date text",
+            "description": "Free text shown instead of the formatted date, on the card and the pin.",
+            "type": "string"
+          },
+          "partner": {
+            "title": "Extra line",
+            "description": "Optional credit or partner line on the stop card.",
+            "type": "string"
+          },
+          "region": {
+            "title": "Region",
+            "description": "State or province as shown, for example MA; counted by the regions stat.",
+            "type": "string"
+          },
+          "regionCode": {
+            "title": "Region code",
+            "description": "Region key used to count regions, for example US-MA.",
+            "type": "string"
+          },
+          "country": {
+            "title": "Country",
+            "description": "Two-letter country code, for example US; counted by the countries stat.",
+            "type": "string"
+          },
+          "durationSec": {
+            "title": "Stop length",
+            "description": "Overrides the stop length for this stop only. Unit: s.",
+            "type": "number",
+            "minimum": 0.1,
+            "maximum": 60
+          },
+          "hidden": {
+            "title": "Hidden",
+            "description": "Leave this stop out of the video (no pin, route leg, card or stat).",
+            "type": "boolean"
+          },
+          "results": {
+            "title": "Results",
+            "description": "Result lines on the stop card.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "One result line of the stop card (and medal dots on the pin label).",
+              "properties": {
+                "medal": {
+                  "title": "Medal",
+                  "description": "Medal drawn before the result and as dots next to the pin.",
+                  "enum": ["gold", "silver", "bronze", "ring", "none"]
+                },
+                "text": {
+                  "title": "Result",
+                  "description": "Result line on the card, drawn exactly as typed.",
+                  "type": "string"
+                },
+                "count": {
+                  "title": "Medal count",
+                  "description": "Number of medal dots next to the pin for this result.",
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 5
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false,
+        "required": ["city", "lat", "lon"]
+      }
+    },
+    "text": {
+      "type": "object",
+      "description": "Text templates and date formats. Templates may contain tokens such as {stops|STOP|STOPS}.",
+      "properties": {
+        "title": {
+          "title": "Title",
+          "description": "Shown at the start over the whole route.",
+          "type": "string",
+          "default": "MY JOURNEY"
+        },
+        "subtitle": {
+          "title": "Subtitle",
+          "description": "Line under the title. Use Insert to add live counts such as stops or kilometres.",
+          "type": "string",
+          "default": "{stops|STOP|STOPS}  /  {km} KM"
+        },
+        "description": {
+          "title": "Description",
+          "description": "Optional extra line under the subtitle, for example your team or trip name; leave it empty to hide it.",
+          "type": "string",
+          "default": ""
+        },
+        "descriptionAt": {
+          "title": "Show description",
+          "description": "Show the description only in the intro, or also at the end under the stats.",
+          "enum": ["intro", "introAndFinale"],
+          "default": "intro"
+        },
+        "kicker": {
+          "title": "Stop label",
+          "description": "Small line above each city, for example STOP 01 / 07.",
+          "type": "string",
+          "default": "STOP {n:02} / {total:02}"
+        },
+        "cardDate": {
+          "title": "Card date format",
+          "description": "Date format on the stop card: YYYY, MM, DD, M, D and MMM are replaced.",
+          "type": "string",
+          "default": "YYYY.MM.DD"
+        },
+        "pinDate": {
+          "title": "Pin date format",
+          "description": "Date format next to each pin; leave empty to hide pin dates.",
+          "type": "string",
+          "default": "MM.DD"
+        },
+        "rangeSeparator": {
+          "title": "Date range separator",
+          "description": "Text between the first and last day of a stop with an end date.",
+          "type": "string",
+          "default": " - "
+        },
+        "pinDateJoin": {
+          "title": "Shared pin date separator",
+          "description": "Joins the dates of stops at the same place on one pin label.",
+          "type": "string",
+          "default": " / "
+        },
+        "uppercase": {
+          "title": "All caps",
+          "description": "Render titles, cities, events and labels in capital letters; result lines stay as typed.",
+          "type": "boolean",
+          "default": true
+        },
+        "solid": {
+          "title": "Solid text",
+          "description": "Draw all text fully opaque, without fade-ins; shapes still fade.",
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "theme": {
+      "type": "object",
+      "description": "Colours.",
+      "properties": {
+        "id": {
+          "title": "Theme",
+          "description": "Built-in theme the colours came from, or custom.",
+          "type": "string",
+          "examples": ["orchid", "midnight-cyan", "ember", "mono", "custom"],
+          "default": "orchid"
+        },
+        "background": {
+          "title": "Background",
+          "description": "Colour behind the map.",
+          "type": "string",
+          "pattern": "^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$",
+          "default": "#07070B"
+        },
+        "grid": {
+          "title": "Grid",
+          "description": "Map grid lines, grid labels and the corner marks.",
+          "type": "string",
+          "pattern": "^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$",
+          "default": "#FFFFFF"
+        },
+        "route": {
+          "title": "Route",
+          "description": "Colour of the route line.",
+          "type": "string",
+          "pattern": "^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$",
+          "default": "#C77DDB"
+        },
+        "glow": {
+          "title": "Glow",
+          "description": "Colour of the soft glow around the route.",
+          "type": "string",
+          "pattern": "^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$",
+          "default": "#660874"
+        },
+        "pin": {
+          "title": "Pin halo",
+          "description": "Halo and pulse rings around each pin.",
+          "type": "string",
+          "pattern": "^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$",
+          "default": "#B35AC7"
+        },
+        "pinCore": {
+          "title": "Pin centre",
+          "description": "Solid dot at the centre of each pin.",
+          "type": "string",
+          "pattern": "^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$",
+          "default": "#FFFFFF"
+        },
+        "text": {
+          "title": "Text",
+          "description": "Titles, cities, events, card lines and big numbers.",
+          "type": "string",
+          "pattern": "^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$",
+          "default": "#FFFFFF"
+        },
+        "accent": {
+          "title": "Accent",
+          "description": "Subtitle, stop labels, dates, card bar and stat labels.",
+          "type": "string",
+          "pattern": "^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$",
+          "default": "#B35AC7"
+        },
+        "flash": {
+          "title": "Flash",
+          "description": "Colour the zoom-through fades into between stops (unless it fades into the background).",
+          "type": "string",
+          "pattern": "^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$",
+          "default": "#FFFFFF"
+        },
+        "medals": {
+          "type": "object",
+          "description": "Medal colours.",
+          "properties": {
+            "gold": {
+              "title": "Gold medal",
+              "description": "Colour of gold medals.",
+              "type": "string",
+              "pattern": "^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$",
+              "default": "#E8C15A"
+            },
+            "silver": {
+              "title": "Silver medal",
+              "description": "Colour of silver medals.",
+              "type": "string",
+              "pattern": "^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$",
+              "default": "#CFD4DC"
+            },
+            "bronze": {
+              "title": "Bronze medal",
+              "description": "Colour of bronze medals.",
+              "type": "string",
+              "pattern": "^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$",
+              "default": "#CD8C5C"
+            },
+            "ring": {
+              "title": "Ring medal",
+              "description": "Colour of outline (ring) medals.",
+              "type": "string",
+              "pattern": "^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$",
+              "default": "#B35AC7"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "fonts": {
+      "type": "object",
+      "description": "Fonts per role: display (titles, cities, numbers) and body (the other texts).",
+      "properties": {
+        "display": {
+          "type": "object",
+          "properties": {
+            "family": {
+              "title": "Font family",
+              "description": "Font used for this role; the bundled fonts are WaycineDisplay and WaycineBody.",
+              "type": "string",
+              "default": "WaycineDisplay"
+            },
+            "weight": {
+              "title": "Font weight",
+              "description": "Nominal weight of the font; for information only.",
+              "type": "number",
+              "minimum": 100,
+              "maximum": 900,
+              "default": 700
+            },
+            "source": {
+              "title": "Font source",
+              "description": "Bundled font, or a font uploaded on this device.",
+              "enum": ["bundled", "local"],
+              "default": "bundled"
+            },
+            "sizeAdjust": {
+              "title": "Font size scale",
+              "description": "Multiplies every text size drawn with this font (width and height). Unit: x.",
+              "type": "number",
+              "minimum": 0.5,
+              "maximum": 2,
+              "default": 1
+            },
+            "widthAdjust": {
+              "title": "Font width scale",
+              "description": "Stretches or narrows every text drawn with this font; heights stay the same. Calibrated for the chosen font; reset it to 1 when you change the font. Unit: x.",
+              "type": "number",
+              "minimum": 0.5,
+              "maximum": 2,
+              "default": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "body": {
+          "type": "object",
+          "properties": {
+            "family": {
+              "title": "Font family",
+              "description": "Font used for this role; the bundled fonts are WaycineDisplay and WaycineBody.",
+              "type": "string",
+              "default": "WaycineBody"
+            },
+            "weight": {
+              "title": "Font weight",
+              "description": "Nominal weight of the font; for information only.",
+              "type": "number",
+              "minimum": 100,
+              "maximum": 900,
+              "default": 600
+            },
+            "source": {
+              "title": "Font source",
+              "description": "Bundled font, or a font uploaded on this device.",
+              "enum": ["bundled", "local"],
+              "default": "bundled"
+            },
+            "sizeAdjust": {
+              "title": "Font size scale",
+              "description": "Multiplies every text size drawn with this font (width and height). Unit: x.",
+              "type": "number",
+              "minimum": 0.5,
+              "maximum": 2,
+              "default": 1
+            },
+            "widthAdjust": {
+              "title": "Font width scale",
+              "description": "Stretches or narrows every text drawn with this font; heights stay the same. Calibrated for the chosen font; reset it to 1 when you change the font. Unit: x.",
+              "type": "number",
+              "minimum": 0.5,
+              "maximum": 2,
+              "default": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "timing": {
+      "type": "object",
+      "description": "Lengths and animation timing.",
+      "properties": {
+        "overviewSec": {
+          "title": "Intro length",
+          "description": "Seconds of the opening overview. Unit: s.",
+          "type": "number",
+          "minimum": 0.5,
+          "maximum": 30,
+          "default": 2.6693333333333333
+        },
+        "stopSec": {
+          "title": "Stop length",
+          "description": "Seconds spent on each stop. Unit: s.",
+          "type": "number",
+          "minimum": 0.5,
+          "maximum": 30,
+          "default": 1.3346666666666667
+        },
+        "finaleSec": {
+          "title": "Finale length",
+          "description": "Seconds of the closing pull-back with stats. Unit: s.",
+          "type": "number",
+          "minimum": 0.5,
+          "maximum": 30,
+          "default": 2.6693333333333333
+        },
+        "endHoldSec": {
+          "title": "End hold",
+          "description": "Seconds to hold the last frame at the end of the video. Unit: s.",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 30,
+          "default": 0
+        },
+        "overview": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "title": "Show intro",
+              "description": "Start with the overview of the whole route.",
+              "type": "boolean",
+              "default": true
+            },
+            "routeEndFrac": {
+              "title": "Route draw time",
+              "description": "Share of the intro by which the route reaches the last stop. Unit: frac.",
+              "type": "number",
+              "minimum": 0.05,
+              "maximum": 1,
+              "default": 0.7
+            },
+            "pushIn": {
+              "title": "Intro push-in",
+              "description": "How much the camera zooms in during the intro. Unit: frac.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.05
+            },
+            "titleFadeSec": {
+              "title": "Title fade-in",
+              "description": "Seconds the title takes to fade in. Unit: s.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 10,
+              "default": 0.26693333333333336
+            },
+            "pulseWindow": {
+              "title": "Intro pulse window",
+              "description": "How long, in stops of route travel, a pin pulses after the route reaches it.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 5,
+              "default": 0.8
+            },
+            "pulseRate": {
+              "title": "Intro pulse speed",
+              "description": "Pulse progress per stop of route travel during the intro. Unit: x.",
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 10,
+              "default": 1.4
+            },
+            "outroSec": {
+              "title": "Intro fade-out",
+              "description": "One-file videos only: seconds the route, pins and title fade out before stop 1. Unit: s.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 10,
+              "default": 0.26693333333333336
+            }
+          },
+          "additionalProperties": false
+        },
+        "stop": {
+          "type": "object",
+          "properties": {
+            "flyFrac": {
+              "title": "Flight share",
+              "description": "Share of each stop spent flying in from the previous stop. Unit: frac.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 0.95,
+              "default": 0.42
+            },
+            "zoomFrac": {
+              "title": "Zoom-through share",
+              "description": "Share of each stop spent zooming into the pin (zoom-through only). Unit: frac.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 0.9,
+              "default": 0.22
+            },
+            "pinLightAt": {
+              "title": "Pin lights at",
+              "description": "Point of the flight, as a share, at which the pin appears and pulses. Unit: frac.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.8
+            },
+            "pulseDurFrac": {
+              "title": "Stop pulse length",
+              "description": "Length of the pin pulse as a share of the stop. Unit: frac.",
+              "type": "number",
+              "minimum": 0.05,
+              "maximum": 2,
+              "default": 0.45
+            },
+            "labelDelaySec": {
+              "title": "Card delay",
+              "description": "Seconds after a stop starts before its card appears. Unit: s.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 10,
+              "default": 0.1001
+            },
+            "labelFadeSec": {
+              "title": "Card fade-in",
+              "description": "Seconds the card takes to slide and fade in. Unit: s.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 10,
+              "default": 0.2002
+            },
+            "cardFadeOutSec": {
+              "title": "Card fade-out",
+              "description": "Fly transition only: seconds the card takes to fade out at the end of a stop. Unit: s.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 10,
+              "default": 0.2002
+            }
+          },
+          "additionalProperties": false
+        },
+        "transition": {
+          "type": "object",
+          "properties": {
+            "mode": {
+              "title": "Transition",
+              "description": "Zoom through each pin into a flash, or fly between stops.",
+              "enum": ["zoomThrough", "fly"],
+              "default": "zoomThrough"
+            },
+            "zoomGain": {
+              "title": "Zoom depth",
+              "description": "How far the zoom-through dives into the pin. Unit: x.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 40,
+              "default": 7
+            },
+            "zoomExp": {
+              "title": "Zoom curve",
+              "description": "Shape of the zoom-through acceleration; higher starts slower.",
+              "type": "number",
+              "minimum": 0.2,
+              "maximum": 6,
+              "default": 2.2
+            },
+            "blurMax": {
+              "title": "Zoom blur",
+              "description": "Blur at the end of the zoom-through. Unit: Du.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 40,
+              "default": 6
+            },
+            "blurExp": {
+              "title": "Blur curve",
+              "description": "Shape of the blur build-up; higher starts later.",
+              "type": "number",
+              "minimum": 0.2,
+              "maximum": 6,
+              "default": 2
+            },
+            "whiteStart": {
+              "title": "Flash starts",
+              "description": "How far into the zoom the flash begins, as a share of the zoom. Unit: frac.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 0.99,
+              "default": 0.55
+            },
+            "whiteExp": {
+              "title": "Flash curve",
+              "description": "Shape of the flash build-up; higher starts later.",
+              "type": "number",
+              "minimum": 0.2,
+              "maximum": 6,
+              "default": 1.5
+            },
+            "recoverSec": {
+              "title": "Flash length",
+              "description": "How long the picture takes to fade back after the cut (one-file videos only). Unit: s.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 10,
+              "default": 0.2002
+            },
+            "flashTo": {
+              "title": "Flash into",
+              "description": "What the zoom between stops fades into: the flash colour (white unless you change it), or the background colour for a dip to dark.",
+              "enum": ["color", "background"],
+              "default": "color"
+            }
+          },
+          "additionalProperties": false
+        },
+        "finale": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "title": "Show finale",
+              "description": "End with the pull-back and stats.",
+              "type": "boolean",
+              "default": true
+            },
+            "cameraEndFrac": {
+              "title": "Finale camera time",
+              "description": "Share of the finale the camera takes to pull back. Unit: frac.",
+              "type": "number",
+              "minimum": 0.05,
+              "maximum": 1,
+              "default": 0.55
+            },
+            "pulseStart": {
+              "title": "Finale pulse start",
+              "description": "Share of the finale after which the pins pulse. Unit: frac.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.3
+            },
+            "pulseDur": {
+              "title": "Finale pulse length",
+              "description": "Length of each finale pulse as a share of the finale. Unit: frac.",
+              "type": "number",
+              "minimum": 0.05,
+              "maximum": 2,
+              "default": 0.5
+            },
+            "pulseStagger": {
+              "title": "Finale pulse stagger",
+              "description": "Delay between the pulses of consecutive pins.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.06
+            },
+            "pinLabelsAfter": {
+              "title": "Finale labels after",
+              "description": "Pin labels show once the finale camera has moved this share of the way. Unit: frac.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.6
+            },
+            "statsStart": {
+              "title": "Stats start",
+              "description": "Share of the finale after which the stats appear. Unit: frac.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.35
+            },
+            "statsDur": {
+              "title": "Stats duration",
+              "description": "Share of the finale over which the stats appear. Unit: frac.",
+              "type": "number",
+              "minimum": 0.01,
+              "maximum": 1,
+              "default": 0.3
+            },
+            "statsRate": {
+              "title": "Stats speed",
+              "description": "How quickly each stat fades in. Unit: x.",
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 10,
+              "default": 2.2
+            },
+            "statsStagger": {
+              "title": "Stats stagger",
+              "description": "Delay between consecutive stats.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 2,
+              "default": 0.35
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "camera": {
+      "type": "object",
+      "description": "Camera zoom and easing.",
+      "properties": {
+        "stampZoom": {
+          "title": "Stop zoom",
+          "description": "How far each stop zooms in, relative to the overview. Unit: x.",
+          "type": "number",
+          "minimum": 0.5,
+          "maximum": 20,
+          "default": 2.3
+        },
+        "flyZoomOut": {
+          "title": "Flight zoom-out",
+          "description": "How much the camera zooms out in the middle of a flight. Unit: frac.",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 0.9,
+          "default": 0.25
+        },
+        "finaleZoom": {
+          "title": "Finale zoom",
+          "description": "Zoom at the end of the finale, relative to the overview. Unit: x.",
+          "type": "number",
+          "minimum": 0.1,
+          "maximum": 5,
+          "default": 0.92
+        },
+        "minSpanDeg": {
+          "title": "Minimum map span",
+          "description": "Smallest area the overview shows, in degrees (single stops, city trips). Unit: deg.",
+          "type": "number",
+          "minimum": 0.001,
+          "maximum": 90,
+          "default": 0.02
+        },
+        "flyEasing": {
+          "title": "Movement easing",
+          "description": "Curve of camera moves and the route draw.",
+          "enum": ["inOutSine", "outCubic", "inOutCubic", "linear"],
+          "default": "inOutSine"
+        },
+        "fadeEasing": {
+          "title": "Fade easing",
+          "description": "Curve of fades, the card slide, rings and stats.",
+          "enum": ["inOutSine", "outCubic", "inOutCubic", "linear"],
+          "default": "outCubic"
+        },
+        "zoomInterp": {
+          "title": "Zoom blending",
+          "description": "Blend zoom levels in straight steps (linear) or evenly by scale (log).",
+          "enum": ["linear", "log"],
+          "default": "linear"
+        }
+      },
+      "additionalProperties": false
+    },
+    "route": {
+      "type": "object",
+      "description": "The route line and its glow.",
+      "properties": {
+        "show": {
+          "title": "Show route",
+          "description": "Draw the route line and its glow.",
+          "type": "boolean",
+          "default": true
+        },
+        "coreWidth": {
+          "title": "Line width",
+          "description": "Width of the route line. Unit: Du.",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 40,
+          "default": 3
+        },
+        "glowWidth": {
+          "title": "Glow width",
+          "description": "Width of the glow stroke before it is blurred. Unit: Du.",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 120,
+          "default": 16
+        },
+        "glowBlur": {
+          "title": "Glow blur",
+          "description": "Softness of the route glow. Unit: Du.",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 60,
+          "default": 10
+        },
+        "glowOpacity": {
+          "title": "Glow strength",
+          "description": "Opacity of the route glow. Unit: alpha.",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 1
+        },
+        "bulge": {
+          "title": "Curve bend",
+          "description": "How strongly each leg of the route arcs; 0 is straight. Unit: frac.",
+          "type": "number",
+          "minimum": -1,
+          "maximum": 1,
+          "default": 0.22
+        },
+        "bulgeSide": {
+          "title": "Curve side",
+          "description": "Side of travel the route arcs bend to.",
+          "enum": ["right", "left", "alternate"],
+          "default": "right"
+        },
+        "samples": {
+          "title": "Curve samples",
+          "description": "Points per route leg; more is smoother.",
+          "type": "number",
+          "minimum": 2,
+          "maximum": 256,
+          "default": 24
+        }
+      },
+      "additionalProperties": false
+    },
+    "pins": {
+      "type": "object",
+      "description": "Pins, pulse rings and pin labels.",
+      "properties": {
+        "radius": {
+          "title": "Pin size",
+          "description": "Radius of the pin dot. Unit: Du.",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 60,
+          "default": 9
+        },
+        "haloPad": {
+          "title": "Halo size",
+          "description": "How far the halo extends beyond the pin dot. Unit: Du.",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 60,
+          "default": 4
+        },
+        "haloAlpha": {
+          "title": "Halo opacity",
+          "description": "Opacity of the halo around each pin. Unit: alpha.",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 0.47058823529411764
+        },
+        "rings": {
+          "title": "Pulse rings",
+          "description": "Start offsets of the pulse rings in pulse progress (the project file may list up to 4).",
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "minItems": 0,
+          "maxItems": 4,
+          "default": [0, 0.35]
+        },
+        "ringStart": {
+          "title": "Ring start size",
+          "description": "Radius of a pulse ring when it starts. Unit: Du.",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 200,
+          "default": 10
+        },
+        "ringGrow": {
+          "title": "Ring growth",
+          "description": "How much a pulse ring grows. Unit: Du.",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 400,
+          "default": 60
+        },
+        "ringWidth": {
+          "title": "Ring width",
+          "description": "Line width of the pulse rings. Unit: Du.",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 30,
+          "default": 3
+        },
+        "ringAlpha": {
+          "title": "Ring opacity",
+          "description": "Opacity of a pulse ring when it starts. Unit: alpha.",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 0.9019607843137255
+        },
+        "medalShine": {
+          "title": "Medal shine",
+          "description": "Strength of the highlight on medals. Unit: alpha.",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 0.35
+        },
+        "ringMedalWidth": {
+          "title": "Ring medal width",
+          "description": "Outline width of ring medals, as a share of their radius. Unit: frac.",
+          "type": "number",
+          "minimum": 0.05,
+          "maximum": 1,
+          "default": 0.35
+        },
+        "label": {
+          "type": "object",
+          "description": "Pin labels.",
+          "properties": {
+            "show": {
+              "title": "Show pin labels",
+              "description": "Show the city and date next to each pin.",
+              "type": "boolean",
+              "default": true
+            },
+            "placement": {
+              "title": "Label placement",
+              "description": "Auto moves each label to the place around its pin that best clears the route and the other labels. Fixed keeps every label beside its pin.",
+              "enum": ["auto", "fixed"],
+              "default": "auto"
+            },
+            "dx": {
+              "title": "Label distance",
+              "description": "Horizontal distance of the label from its pin. Unit: Du.",
+              "type": "number",
+              "minimum": -200,
+              "maximum": 400,
+              "default": 18
+            },
+            "cityDy": {
+              "title": "Label city height",
+              "description": "Vertical position of the city label relative to the pin. Unit: Du.",
+              "type": "number",
+              "minimum": -300,
+              "maximum": 300,
+              "default": -30
+            },
+            "dateDy": {
+              "title": "Label date height",
+              "description": "Vertical position of the date label relative to the pin. Unit: Du.",
+              "type": "number",
+              "minimum": -300,
+              "maximum": 300,
+              "default": -4
+            },
+            "citySize": {
+              "title": "Label city size",
+              "description": "Text size of the city next to each pin. Unit: Du.",
+              "type": "number",
+              "minimum": 1,
+              "maximum": 400,
+              "default": 24
+            },
+            "cityTracking": {
+              "title": "Label city spacing",
+              "description": "Extra space between the letters of pin city labels. Unit: Du.",
+              "type": "number",
+              "minimum": -10,
+              "maximum": 40,
+              "default": 1
+            },
+            "dateSize": {
+              "title": "Label date size",
+              "description": "Text size of the date next to each pin. Unit: Du.",
+              "type": "number",
+              "minimum": 1,
+              "maximum": 400,
+              "default": 20
+            },
+            "alpha": {
+              "title": "Label opacity",
+              "description": "Opacity of pin labels (solid text ignores it). Unit: alpha.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.9019607843137255
+            },
+            "medalGap": {
+              "title": "Medal dot gap",
+              "description": "Space between the date and the first medal dot. Unit: Du.",
+              "type": "number",
+              "minimum": -100,
+              "maximum": 200,
+              "default": 14
+            },
+            "medalR": {
+              "title": "Medal dot size",
+              "description": "Radius of the medal dots next to pins. Unit: Du.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 40,
+              "default": 7
+            },
+            "medalStep": {
+              "title": "Medal dot spacing",
+              "description": "Distance between neighbouring medal dots. Unit: Du.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100,
+              "default": 17
+            },
+            "medalDy": {
+              "title": "Medal dot height",
+              "description": "Vertical position of the medal dots relative to the pin. Unit: Du.",
+              "type": "number",
+              "minimum": -200,
+              "maximum": 200,
+              "default": 8
+            },
+            "medalAlpha": {
+              "title": "Medal dot opacity",
+              "description": "Opacity of the medal dots. Unit: alpha.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.9215686274509803
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "card": {
+      "type": "object",
+      "description": "The stop card.",
+      "properties": {
+        "show": {
+          "title": "Show cards",
+          "description": "Show a card with the details of each stop.",
+          "type": "boolean",
+          "default": true
+        },
+        "showKicker": {
+          "title": "Show stop label",
+          "description": "Show the small stop label above the city.",
+          "type": "boolean",
+          "default": true
+        },
+        "showEvent": {
+          "title": "Show event",
+          "description": "Show the event line on the card.",
+          "type": "boolean",
+          "default": true
+        },
+        "showDate": {
+          "title": "Show date",
+          "description": "Show the date line on the card.",
+          "type": "boolean",
+          "default": true
+        },
+        "showPartner": {
+          "title": "Show extra line",
+          "description": "Show the partner or credit line on the card.",
+          "type": "boolean",
+          "default": true
+        },
+        "showResults": {
+          "title": "Show results",
+          "description": "Show result lines with medals on the card.",
+          "type": "boolean",
+          "default": true
+        },
+        "slide": {
+          "title": "Slide distance",
+          "description": "How far the card slides in from the right. Unit: Du.",
+          "type": "number",
+          "minimum": -400,
+          "maximum": 400,
+          "default": 40
+        },
+        "backdrop": {
+          "title": "Backdrop",
+          "description": "How much the route and the grid dim under the card, so no line runs through its text. 0 draws no backdrop. Unit: alpha.",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 0.85
+        },
+        "leaderAlpha": {
+          "title": "Pointer opacity",
+          "description": "Opacity of the line from the pin to the card. Unit: alpha.",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 0.6
+        },
+        "leaderWidth": {
+          "title": "Pointer width",
+          "description": "Width of the line from the pin to the card. Unit: Du.",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 20,
+          "default": 2
+        },
+        "barWidth": {
+          "title": "Bar width",
+          "description": "Width of the accent bar beside the card. Unit: Du.",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 60,
+          "default": 6
+        },
+        "barDx": {
+          "title": "Bar position",
+          "description": "Horizontal position of the accent bar on the card. Unit: Du.",
+          "type": "number",
+          "minimum": -400,
+          "maximum": 400,
+          "default": -12
+        },
+        "kicker": {
+          "type": "object",
+          "properties": {
+            "dx": {
+              "title": "Stop label x",
+              "description": "Horizontal position of the stop label on the card. Unit: Du.",
+              "type": "number",
+              "minimum": -400,
+              "maximum": 1200,
+              "default": 12
+            },
+            "dy": {
+              "title": "Stop label y",
+              "description": "Vertical position of the stop label on the card. Unit: Du.",
+              "type": "number",
+              "minimum": -400,
+              "maximum": 1200,
+              "default": -4
+            },
+            "size": {
+              "title": "Stop label size",
+              "description": "Text size of the stop label. Unit: Du.",
+              "type": "number",
+              "minimum": 1,
+              "maximum": 400,
+              "default": 26
+            },
+            "tracking": {
+              "title": "Stop label spacing",
+              "description": "Extra space between the letters of the stop label. Unit: Du.",
+              "type": "number",
+              "minimum": -10,
+              "maximum": 40,
+              "default": 3
+            },
+            "alpha": {
+              "title": "Stop label opacity",
+              "description": "Opacity of the stop label (solid text ignores it). Unit: alpha.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "city": {
+          "type": "object",
+          "properties": {
+            "dx": {
+              "title": "City x",
+              "description": "Horizontal position of the city on the card. Unit: Du.",
+              "type": "number",
+              "minimum": -400,
+              "maximum": 1200,
+              "default": 8
+            },
+            "dy": {
+              "title": "City y",
+              "description": "Vertical position of the city on the card. Unit: Du.",
+              "type": "number",
+              "minimum": -400,
+              "maximum": 1200,
+              "default": 30
+            },
+            "size": {
+              "title": "City size",
+              "description": "Text size of the city. Unit: Du.",
+              "type": "number",
+              "minimum": 1,
+              "maximum": 400,
+              "default": 118
+            },
+            "tracking": {
+              "title": "City spacing",
+              "description": "Extra space between the letters of the city. Unit: Du.",
+              "type": "number",
+              "minimum": -10,
+              "maximum": 40,
+              "default": 2
+            },
+            "alpha": {
+              "title": "City opacity",
+              "description": "Opacity of the city (solid text ignores it). Unit: alpha.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 1
+            },
+            "minSize": {
+              "title": "City smallest size",
+              "description": "Smallest size a long city may shrink to. Unit: Du.",
+              "type": "number",
+              "minimum": 1,
+              "maximum": 400,
+              "default": 60
+            },
+            "shrinkStep": {
+              "title": "City shrink step",
+              "description": "Size removed per step while a long city shrinks to fit. Unit: Du.",
+              "type": "number",
+              "minimum": 0.5,
+              "maximum": 60,
+              "default": 6
+            },
+            "fitMaxW": {
+              "title": "City width limit",
+              "description": "Widest the city may be before it shrinks: 0 or less counts from the frame width (-170 is the width minus 170), more than 0 is a fixed width. Unit: Du.",
+              "type": "number",
+              "minimum": -4000,
+              "maximum": 4000,
+              "default": -170
+            },
+            "measureTracking": {
+              "title": "City fit counts spacing",
+              "description": "Include letter spacing when checking whether the city fits.",
+              "type": "boolean",
+              "default": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "event": {
+          "type": "object",
+          "properties": {
+            "dx": {
+              "title": "Event x",
+              "description": "Horizontal position of the event on the card. Unit: Du.",
+              "type": "number",
+              "minimum": -400,
+              "maximum": 1200,
+              "default": 12
+            },
+            "dy": {
+              "title": "Event y",
+              "description": "Vertical position of the event on the card. Unit: Du.",
+              "type": "number",
+              "minimum": -400,
+              "maximum": 1200,
+              "default": 162
+            },
+            "size": {
+              "title": "Event size",
+              "description": "Text size of the event. Unit: Du.",
+              "type": "number",
+              "minimum": 1,
+              "maximum": 400,
+              "default": 30
+            },
+            "tracking": {
+              "title": "Event spacing",
+              "description": "Extra space between the letters of the event. Unit: Du.",
+              "type": "number",
+              "minimum": -10,
+              "maximum": 40,
+              "default": 2
+            },
+            "alpha": {
+              "title": "Event opacity",
+              "description": "Opacity of the event (solid text ignores it). Unit: alpha.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.92
+            },
+            "minSize": {
+              "title": "Event smallest size",
+              "description": "Smallest size a long event may shrink to. Unit: Du.",
+              "type": "number",
+              "minimum": 1,
+              "maximum": 400,
+              "default": 20
+            },
+            "shrinkStep": {
+              "title": "Event shrink step",
+              "description": "Size removed per step while a long event shrinks to fit. Unit: Du.",
+              "type": "number",
+              "minimum": 0.5,
+              "maximum": 60,
+              "default": 2
+            },
+            "fitMaxW": {
+              "title": "Event width limit",
+              "description": "Widest the event may be before it shrinks: 0 or less counts from the frame width (-170 is the width minus 170), more than 0 is a fixed width. Unit: Du.",
+              "type": "number",
+              "minimum": -4000,
+              "maximum": 4000,
+              "default": -180
+            },
+            "measureTracking": {
+              "title": "Event fit counts spacing",
+              "description": "Include letter spacing when checking whether the event fits.",
+              "type": "boolean",
+              "default": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "date": {
+          "type": "object",
+          "properties": {
+            "dx": {
+              "title": "Date x",
+              "description": "Horizontal position of the date on the card. Unit: Du.",
+              "type": "number",
+              "minimum": -400,
+              "maximum": 1200,
+              "default": 12
+            },
+            "dy": {
+              "title": "Date y",
+              "description": "Vertical position of the date on the card. Unit: Du.",
+              "type": "number",
+              "minimum": -400,
+              "maximum": 1200,
+              "default": 202
+            },
+            "size": {
+              "title": "Date size",
+              "description": "Text size of the date. Unit: Du.",
+              "type": "number",
+              "minimum": 1,
+              "maximum": 400,
+              "default": 24
+            },
+            "tracking": {
+              "title": "Date spacing",
+              "description": "Extra space between the letters of the date. Unit: Du.",
+              "type": "number",
+              "minimum": -10,
+              "maximum": 40,
+              "default": 2
+            },
+            "alpha": {
+              "title": "Date opacity",
+              "description": "Opacity of the date (solid text ignores it). Unit: alpha.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "rowsY": {
+          "title": "Rows start",
+          "description": "Vertical position where the extra line and result rows start. Unit: Du.",
+          "type": "number",
+          "minimum": -400,
+          "maximum": 1200,
+          "default": 244
+        },
+        "line": {
+          "type": "object",
+          "properties": {
+            "dx": {
+              "title": "Rows x",
+              "description": "Horizontal position of the extra line and result rows. Unit: Du.",
+              "type": "number",
+              "minimum": -400,
+              "maximum": 1200,
+              "default": 12
+            },
+            "size": {
+              "title": "Rows text size",
+              "description": "Text size of the extra line and result rows. Unit: Du.",
+              "type": "number",
+              "minimum": 1,
+              "maximum": 400,
+              "default": 27
+            },
+            "tracking": {
+              "title": "Rows spacing",
+              "description": "Extra space between the letters of the extra line and result rows. Unit: Du.",
+              "type": "number",
+              "minimum": -10,
+              "maximum": 40,
+              "default": 2
+            },
+            "alpha": {
+              "title": "Rows opacity",
+              "description": "Opacity of the extra line and result rows (solid text ignores it). Unit: alpha.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.9
+            },
+            "partnerLineH": {
+              "title": "Extra line height",
+              "description": "Line height of the extra line. Unit: Du.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 200,
+              "default": 34
+            },
+            "resultRowH": {
+              "title": "Result row height",
+              "description": "Line height of result rows stacked one per line. Unit: Du.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 200,
+              "default": 36
+            },
+            "medalR": {
+              "title": "Result medal size",
+              "description": "Radius of the medals on result rows. Unit: Du.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 60,
+              "default": 10
+            },
+            "medalDx": {
+              "title": "Result medal x",
+              "description": "Horizontal position of the medal on a result row. Unit: Du.",
+              "type": "number",
+              "minimum": -100,
+              "maximum": 200,
+              "default": 10
+            },
+            "medalDy": {
+              "title": "Result medal y",
+              "description": "Vertical position of the medal on a result row. Unit: Du.",
+              "type": "number",
+              "minimum": -100,
+              "maximum": 200,
+              "default": 15
+            },
+            "textDx": {
+              "title": "Result text x",
+              "description": "Horizontal position of the result text after its medal. Unit: Du.",
+              "type": "number",
+              "minimum": -100,
+              "maximum": 400,
+              "default": 26
+            },
+            "inlineGap": {
+              "title": "Result gap",
+              "description": "Space between results written on one line. Unit: Du.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 400,
+              "default": 26
+            }
+          },
+          "additionalProperties": false
+        },
+        "bar": {
+          "type": "object",
+          "properties": {
+            "base": {
+              "title": "Bar height",
+              "description": "Height of the accent bar before extra lines and results. Unit: Du.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1200,
+              "default": 236
+            },
+            "perResult": {
+              "title": "Bar per result",
+              "description": "Extra accent bar height for results. Unit: Du.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 400,
+              "default": 36
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "stats": {
+      "type": "object",
+      "description": "Finale statistics.",
+      "properties": {
+        "show": {
+          "title": "Show stats",
+          "description": "Show the big numbers during the finale.",
+          "type": "boolean",
+          "default": true
+        },
+        "labelSize": {
+          "title": "Stat label size",
+          "description": "Size of the words after the numbers. Unit: Du.",
+          "type": "number",
+          "minimum": 1,
+          "maximum": 400,
+          "default": 52
+        },
+        "labelTracking": {
+          "title": "Stat label spacing",
+          "description": "Extra space between the letters of the stat labels. Unit: Du.",
+          "type": "number",
+          "minimum": -10,
+          "maximum": 40,
+          "default": 2
+        },
+        "items": {
+          "title": "Stats",
+          "description": "Finale stats in order. Items without a value are left out.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "description": "One finale stat: a computed number (or your own value) and a label.",
+            "properties": {
+              "source": {
+                "title": "Stat",
+                "description": "What the number counts; custom shows your own value.",
+                "enum": ["stops", "regions", "countries", "months", "days", "km", "mi", "custom"]
+              },
+              "label": {
+                "title": "Stat label",
+                "description": "Word after the number, for example STOPS.",
+                "type": "string"
+              },
+              "labelOne": {
+                "title": "Label for one",
+                "description": "Word used when the number is exactly 1, for example STOP.",
+                "type": "string"
+              },
+              "value": {
+                "title": "Own value",
+                "description": "Shown instead of the counted number (required for custom stats).",
+                "type": "string"
+              }
+            },
+            "additionalProperties": false,
+            "required": ["source"]
+          },
+          "default": [
+            {
+              "source": "stops",
+              "label": "STOPS",
+              "labelOne": "STOP"
+            },
+            {
+              "source": "countries",
+              "label": "COUNTRIES",
+              "labelOne": "COUNTRY"
+            },
+            {
+              "source": "km",
+              "label": "KM"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "graticule": {
+      "type": "object",
+      "description": "Map grid and its labels.",
+      "properties": {
+        "show": {
+          "title": "Show grid",
+          "description": "Draw the latitude and longitude grid.",
+          "type": "boolean",
+          "default": true
+        },
+        "stepMode": {
+          "title": "Grid spacing",
+          "description": "Pick the spacing automatically from the zoom, or use a fixed step.",
+          "enum": ["auto", "fixed"],
+          "default": "auto"
+        },
+        "fixedStep": {
+          "title": "Fixed grid step",
+          "description": "Grid spacing in degrees when the spacing is fixed. Unit: deg.",
+          "type": "number",
+          "minimum": 0.01,
+          "maximum": 90,
+          "default": 0.25
+        },
+        "targetSpacing": {
+          "title": "Grid target spacing",
+          "description": "Automatic spacing aims for grid lines about this far apart. Unit: Du.",
+          "type": "number",
+          "minimum": 5,
+          "maximum": 600,
+          "default": 63
+        },
+        "zoomSplit": {
+          "title": "Grid refine zoom",
+          "description": "The grid spacing halves once the camera zooms in this far past the overview. Unit: x.",
+          "type": "number",
+          "minimum": 1.05,
+          "maximum": 20,
+          "default": 1.8
+        },
+        "maxSubdiv": {
+          "title": "Grid refinements",
+          "description": "How many times the grid spacing may halve as the camera zooms in.",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 4,
+          "default": 1
+        },
+        "lineWidth": {
+          "title": "Grid line width",
+          "description": "Width of the grid lines. Unit: Du.",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 20,
+          "default": 1
+        },
+        "minorAlpha": {
+          "title": "Minor line opacity",
+          "description": "Opacity of unlabelled grid lines. Unit: alpha.",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 0.047058823529411764
+        },
+        "majorAlpha": {
+          "title": "Major line opacity",
+          "description": "Opacity of labelled grid lines. Unit: alpha.",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 0.13333333333333333
+        },
+        "labels": {
+          "title": "Grid labels",
+          "description": "Label the major grid lines with their degrees.",
+          "type": "boolean",
+          "default": true
+        },
+        "clearLabels": {
+          "title": "Keep grid labels apart",
+          "description": "Leave out a grid label that would touch a corner mark or another grid label.",
+          "type": "boolean",
+          "default": true
+        },
+        "labelSize": {
+          "title": "Grid label size",
+          "description": "Text size of the grid labels. Unit: Du.",
+          "type": "number",
+          "minimum": 1,
+          "maximum": 400,
+          "default": 18
+        },
+        "labelAlpha": {
+          "title": "Grid label opacity",
+          "description": "Opacity of the grid labels (solid text ignores it). Unit: alpha.",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 0.35294117647058826
+        },
+        "lonLabelOffset": {
+          "title": "Longitude label position",
+          "description": "Longitude labels: distance right of their line, and distance from the top of the frame. Unit: Du.",
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": -400,
+            "maximum": 400
+          },
+          "minItems": 2,
+          "maxItems": 2,
+          "default": [5, 18]
+        },
+        "latLabelOffset": {
+          "title": "Latitude label position",
+          "description": "Latitude labels: distance from the left of the frame, and distance below their line. Unit: Du.",
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": -400,
+            "maximum": 400
+          },
+          "minItems": 2,
+          "maxItems": 2,
+          "default": [18, 4]
+        },
+        "labelFormat": {
+          "title": "Grid label style",
+          "description": "Plain (72W) or with a degree sign.",
+          "enum": ["plain", "degree"],
+          "default": "plain"
+        }
+      },
+      "additionalProperties": false
+    },
+    "hud": {
+      "type": "object",
+      "description": "Corner marks.",
+      "properties": {
+        "corners": {
+          "title": "Corner marks",
+          "description": "Draw the bracket marks in the corners of the frame.",
+          "type": "boolean",
+          "default": true
+        },
+        "cornerLen": {
+          "title": "Corner mark length",
+          "description": "Length of each arm of the corner marks. Unit: Du.",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 400,
+          "default": 40
+        },
+        "cornerMargin": {
+          "title": "Corner mark inset",
+          "description": "Distance of the corner marks from the frame edges. Unit: Du.",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 400,
+          "default": 28
+        },
+        "cornerWidth": {
+          "title": "Corner mark width",
+          "description": "Line width of the corner marks. Unit: Du.",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 20,
+          "default": 2
+        },
+        "cornerAlpha": {
+          "title": "Corner mark opacity",
+          "description": "Opacity of the corner marks. Unit: alpha.",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 0.47058823529411764
+        }
+      },
+      "additionalProperties": false
+    },
+    "output": {
+      "type": "object",
+      "description": "Video format and export.",
+      "properties": {
+        "aspect": {
+          "title": "Format",
+          "description": "Landscape 16:9, portrait 9:16, square 1:1, 4:5 or a custom size.",
+          "enum": ["16:9", "9:16", "1:1", "4:5", "custom"],
+          "default": "16:9"
+        },
+        "shortSide": {
+          "title": "Video size",
+          "description": "Default size for Export video; you can change it there. Unit: px.",
+          "enum": [720, 1080, 1440, 2160],
+          "default": 1080
+        },
+        "fps": {
+          "title": "Frame rate",
+          "description": "Frames per second. Unit: fps.",
+          "enum": [23.976, 24, 25, 29.97, 30, 50, 59.94, 60],
+          "default": 29.97
+        },
+        "supersample": {
+          "title": "Extra smooth",
+          "description": "Render at twice the size and scale down (slower). Unit: x.",
+          "enum": [1, 2],
+          "default": 1
+        },
+        "layout": {
+          "title": "Layout",
+          "description": "Which layout to use; Auto picks it from the format.",
+          "enum": ["auto", "landscape", "portrait", "square"],
+          "default": "auto"
+        },
+        "quality": {
+          "title": "Quality",
+          "description": "Default quality for Export video (higher makes bigger files); you can change it there.",
+          "enum": ["standard", "high", "max"],
+          "default": "high"
+        },
+        "bitrateMbps": {
+          "title": "Bitrate",
+          "description": "Exact bitrate in Mbps; 0 uses the quality setting. Unit: Mbps.",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 200,
+          "default": 0
+        },
+        "exportMode": {
+          "title": "Export as",
+          "description": "One continuous video, or separate clips per part.",
+          "enum": ["single", "segments"],
+          "default": "single"
+        },
+        "width": {
+          "title": "Custom width",
+          "description": "Width in pixels when the format is custom (even, 320 to 4096). Used when output.aspect is \"custom\". Unit: px.",
+          "type": "integer",
+          "minimum": 320,
+          "maximum": 4096,
+          "multipleOf": 2
+        },
+        "height": {
+          "title": "Custom height",
+          "description": "Height in pixels when the format is custom (even, 320 to 4096). Used when output.aspect is \"custom\". Unit: px.",
+          "type": "integer",
+          "minimum": 320,
+          "maximum": 4096,
+          "multipleOf": 2
+        }
+      },
+      "additionalProperties": false
+    },
+    "layouts": {
+      "type": "object",
+      "description": "Geometry per layout profile. The active profile follows output.layout (auto picks by aspect).",
+      "properties": {
+        "landscape": {
+          "type": "object",
+          "properties": {
+            "fit": {
+              "type": "object",
+              "properties": {
+                "marginX": {
+                  "title": "Overview side margins",
+                  "description": "Total space left and right of the route in the overview. Unit: Du.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 4000,
+                  "default": 640
+                },
+                "marginY": {
+                  "title": "Overview top and bottom margins",
+                  "description": "Total space above and below the route in the overview. Unit: Du.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 4000,
+                  "default": 380
+                },
+                "nudgeDeg": {
+                  "title": "Overview nudge",
+                  "description": "Moves the overview camera by degrees of longitude and of map height. Unit: deg.",
+                  "type": "array",
+                  "items": {
+                    "type": "number",
+                    "minimum": -10,
+                    "maximum": 10
+                  },
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "default": [0.25, -0.05]
+                },
+                "nudgeMaxFrac": {
+                  "title": "Nudge limit",
+                  "description": "Largest nudge as a share of the route span, so small trips stay on screen. Unit: frac.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "default": 0.1
+                },
+                "offsetDu": {
+                  "title": "Overview offset",
+                  "description": "Moves the fitted route away from the frame centre (right, down). Unit: Du.",
+                  "type": "array",
+                  "items": {
+                    "type": "number",
+                    "minimum": -2000,
+                    "maximum": 2000
+                  },
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "default": [0, 0]
+                }
+              },
+              "additionalProperties": false
+            },
+            "stopPin": {
+              "title": "Stop pin position",
+              "description": "Where the pin sits on screen at each stop, from the frame centre (right, down). Unit: Du.",
+              "type": "array",
+              "items": {
+                "type": "number",
+                "minimum": -2000,
+                "maximum": 2000
+              },
+              "minItems": 2,
+              "maxItems": 2,
+              "default": [-180, -60]
+            },
+            "title": {
+              "type": "object",
+              "properties": {
+                "x": {
+                  "title": "Title x",
+                  "description": "Left edge of the title, subtitle and description. Unit: Du.",
+                  "type": "number",
+                  "minimum": -400,
+                  "maximum": 4000,
+                  "default": 96
+                },
+                "y": {
+                  "title": "Title y",
+                  "description": "Top of the title. Unit: Du.",
+                  "type": "number",
+                  "minimum": -400,
+                  "maximum": 4000,
+                  "default": 80
+                },
+                "size": {
+                  "title": "Title size",
+                  "description": "Text size of the title. Unit: Du.",
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 400,
+                  "default": 44
+                },
+                "tracking": {
+                  "title": "Title spacing",
+                  "description": "Extra space between the letters of the title. Unit: Du.",
+                  "type": "number",
+                  "minimum": -10,
+                  "maximum": 40,
+                  "default": 3
+                },
+                "subY": {
+                  "title": "Subtitle y",
+                  "description": "Top of the subtitle. Unit: Du.",
+                  "type": "number",
+                  "minimum": -400,
+                  "maximum": 4000,
+                  "default": 134
+                },
+                "subSize": {
+                  "title": "Subtitle size",
+                  "description": "Text size of the subtitle. Unit: Du.",
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 400,
+                  "default": 28
+                },
+                "subTracking": {
+                  "title": "Subtitle spacing",
+                  "description": "Extra space between the letters of the subtitle. Unit: Du.",
+                  "type": "number",
+                  "minimum": -10,
+                  "maximum": 40,
+                  "default": 3
+                },
+                "subAlpha": {
+                  "title": "Subtitle opacity",
+                  "description": "Opacity of the subtitle relative to the title (solid text ignores it). Unit: alpha.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "default": 0.9
+                },
+                "minSize": {
+                  "title": "Title smallest size",
+                  "description": "Smallest size a long title may shrink to. Unit: Du.",
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 400,
+                  "default": 28
+                },
+                "subMinSize": {
+                  "title": "Subtitle smallest size",
+                  "description": "Smallest size a long subtitle may shrink to. Unit: Du.",
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 400,
+                  "default": 18
+                },
+                "shrinkStep": {
+                  "title": "Title shrink step",
+                  "description": "Size removed per step while a long title, subtitle or description shrinks to fit. Unit: Du.",
+                  "type": "number",
+                  "minimum": 0.5,
+                  "maximum": 60,
+                  "default": 2
+                },
+                "descY": {
+                  "title": "Description y",
+                  "description": "Top of the description line. Unit: Du.",
+                  "type": "number",
+                  "minimum": -400,
+                  "maximum": 4000,
+                  "default": 176
+                },
+                "descSize": {
+                  "title": "Description size",
+                  "description": "Text size of the description line, in the intro and in the finale. Unit: Du.",
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 400,
+                  "default": 22
+                },
+                "descTracking": {
+                  "title": "Description spacing",
+                  "description": "Extra space between the letters of the description. Unit: Du.",
+                  "type": "number",
+                  "minimum": -10,
+                  "maximum": 40,
+                  "default": 2
+                },
+                "descAlpha": {
+                  "title": "Description opacity",
+                  "description": "Opacity of the description relative to the title (solid text ignores it). Unit: alpha.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "default": 0.8
+                },
+                "descMinSize": {
+                  "title": "Description smallest size",
+                  "description": "Smallest size a long description may shrink to. Unit: Du.",
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 400,
+                  "default": 14
+                }
+              },
+              "additionalProperties": false
+            },
+            "card": {
+              "type": "object",
+              "properties": {
+                "placement": {
+                  "title": "Card placement",
+                  "description": "Card to the right of the pin, or below it from the left edge.",
+                  "enum": ["rightOfPin", "belowPin"],
+                  "default": "rightOfPin"
+                },
+                "x": {
+                  "title": "Card x",
+                  "description": "Right of the pin: distance from the pin; below the pin: distance from the left edge. Unit: Du.",
+                  "type": "number",
+                  "minimum": -2000,
+                  "maximum": 4000,
+                  "default": 70
+                },
+                "dy": {
+                  "title": "Card y",
+                  "description": "Vertical distance of the card from the pin. Unit: Du.",
+                  "type": "number",
+                  "minimum": -2000,
+                  "maximum": 4000,
+                  "default": -150
+                },
+                "leader": {
+                  "title": "Pointer shape",
+                  "description": "Line from the pin to the card: diagonal or vertical.",
+                  "enum": ["diagonal", "vertical"],
+                  "default": "diagonal"
+                },
+                "leaderFrom": {
+                  "title": "Pointer start",
+                  "description": "Start of the pointer line, from the pin centre (right, down). Unit: Du.",
+                  "type": "array",
+                  "items": {
+                    "type": "number",
+                    "minimum": -400,
+                    "maximum": 400
+                  },
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "default": [14, -14]
+                },
+                "leaderTo": {
+                  "title": "Pointer end",
+                  "description": "End of the pointer line, from the card corner or below the pin (right, down). Unit: Du.",
+                  "type": "array",
+                  "items": {
+                    "type": "number",
+                    "minimum": -800,
+                    "maximum": 800
+                  },
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "default": [-12, 150]
+                },
+                "results": {
+                  "title": "Result rows",
+                  "description": "Results side by side on one line, or one per line.",
+                  "enum": ["inline", "stacked"],
+                  "default": "inline"
+                },
+                "partnerWrapChars": {
+                  "title": "Extra line wrap",
+                  "description": "Split the extra line in two when it is longer than this many characters; 0 never splits. Unit: chars.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 200,
+                  "default": 0
+                },
+                "barPartner": {
+                  "title": "Bar for extra line",
+                  "description": "Extra accent bar height when a stop has an extra line. Unit: Du.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 400,
+                  "default": 34
+                },
+                "resultsBarPerRow": {
+                  "title": "Bar grows per result",
+                  "description": "Grow the accent bar for every result row, instead of once.",
+                  "type": "boolean",
+                  "default": false
+                }
+              },
+              "additionalProperties": false
+            },
+            "pinLabels": {
+              "type": "object",
+              "properties": {
+                "order": {
+                  "title": "Label drawing order",
+                  "description": "Draw each label right after its pin, or all labels after all pins.",
+                  "enum": ["perPin", "afterPins"],
+                  "default": "perPin"
+                },
+                "flipAboveX": {
+                  "title": "Flip labels after",
+                  "description": "Labels of pins right of this share of the width go on the left of their pin; empty flips a label only when it would run off the frame. With Label placement on Auto this is only the side a label prefers. Unit: frac.",
+                  "type": ["number", "null"],
+                  "minimum": 0,
+                  "maximum": 1,
+                  "default": null
+                },
+                "medals": {
+                  "title": "Medal dots on labels",
+                  "description": "Show medal dots after the date on pin labels.",
+                  "type": "boolean",
+                  "default": true
+                }
+              },
+              "additionalProperties": false
+            },
+            "stats": {
+              "type": "object",
+              "properties": {
+                "x": {
+                  "title": "Stats x",
+                  "description": "Left edge of the first finale stat. Unit: Du.",
+                  "type": "number",
+                  "minimum": -400,
+                  "maximum": 4000,
+                  "default": 96
+                },
+                "y": {
+                  "title": "Stats y",
+                  "description": "Top of the first finale stat. Unit: Du.",
+                  "type": "number",
+                  "minimum": -400,
+                  "maximum": 4000,
+                  "default": 70
+                },
+                "direction": {
+                  "title": "Stats arrangement",
+                  "description": "Stats side by side in a row, or stacked in a column.",
+                  "enum": ["row", "column"],
+                  "default": "row"
+                },
+                "pitch": {
+                  "title": "Stats spacing",
+                  "description": "Distance between neighbouring stats. Unit: Du.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 2000,
+                  "default": 330
+                },
+                "numberSize": {
+                  "title": "Stats number size",
+                  "description": "Text size of the big numbers. Unit: Du.",
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 800,
+                  "default": 170
+                },
+                "labelDx": {
+                  "title": "Stats label x",
+                  "description": "Horizontal position of each stat label from its number. Unit: Du.",
+                  "type": "number",
+                  "minimum": -400,
+                  "maximum": 1200,
+                  "default": 110
+                },
+                "labelDy": {
+                  "title": "Stats label y",
+                  "description": "Vertical position of each stat label from the top of its number. Unit: Du.",
+                  "type": "number",
+                  "minimum": -400,
+                  "maximum": 1200,
+                  "default": 62
+                }
+              },
+              "additionalProperties": false
+            },
+            "safeArea": {
+              "type": "object",
+              "properties": {
+                "top": {
+                  "title": "Safe area top",
+                  "description": "Top margin of the safe-zone guide, as a share of the height. Unit: frac.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 0.5,
+                  "default": 0.067
+                },
+                "right": {
+                  "title": "Safe area right",
+                  "description": "Right margin of the safe-zone guide, as a share of the width (preview only). Unit: frac.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 0.5,
+                  "default": 0.05
+                },
+                "bottom": {
+                  "title": "Safe area bottom",
+                  "description": "Bottom margin of the safe-zone guide, as a share of the height. Unit: frac.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 0.5,
+                  "default": 0.067
+                },
+                "left": {
+                  "title": "Safe area left",
+                  "description": "Left margin of the safe-zone guide, as a share of the width (preview only). Unit: frac.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 0.5,
+                  "default": 0.05
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "portrait": {
+          "type": "object",
+          "properties": {
+            "fit": {
+              "type": "object",
+              "properties": {
+                "marginX": {
+                  "title": "Overview side margins",
+                  "description": "Total space left and right of the route in the overview. Unit: Du.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 4000,
+                  "default": 220
+                },
+                "marginY": {
+                  "title": "Overview top and bottom margins",
+                  "description": "Total space above and below the route in the overview. Unit: Du.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 4000,
+                  "default": 900
+                },
+                "nudgeDeg": {
+                  "title": "Overview nudge",
+                  "description": "Moves the overview camera by degrees of longitude and of map height. Unit: deg.",
+                  "type": "array",
+                  "items": {
+                    "type": "number",
+                    "minimum": -10,
+                    "maximum": 10
+                  },
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "default": [0, 0.25]
+                },
+                "nudgeMaxFrac": {
+                  "title": "Nudge limit",
+                  "description": "Largest nudge as a share of the route span, so small trips stay on screen. Unit: frac.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "default": 0.1
+                },
+                "offsetDu": {
+                  "title": "Overview offset",
+                  "description": "Moves the fitted route away from the frame centre (right, down). Unit: Du.",
+                  "type": "array",
+                  "items": {
+                    "type": "number",
+                    "minimum": -2000,
+                    "maximum": 2000
+                  },
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "default": [0, 0]
+                }
+              },
+              "additionalProperties": false
+            },
+            "stopPin": {
+              "title": "Stop pin position",
+              "description": "Where the pin sits on screen at each stop, from the frame centre (right, down). Unit: Du.",
+              "type": "array",
+              "items": {
+                "type": "number",
+                "minimum": -2000,
+                "maximum": 2000
+              },
+              "minItems": 2,
+              "maxItems": 2,
+              "default": [-237.6, -384]
+            },
+            "title": {
+              "type": "object",
+              "properties": {
+                "x": {
+                  "title": "Title x",
+                  "description": "Left edge of the title, subtitle and description. Unit: Du.",
+                  "type": "number",
+                  "minimum": -400,
+                  "maximum": 4000,
+                  "default": 80
+                },
+                "y": {
+                  "title": "Title y",
+                  "description": "Top of the title. Unit: Du.",
+                  "type": "number",
+                  "minimum": -400,
+                  "maximum": 4000,
+                  "default": 260
+                },
+                "size": {
+                  "title": "Title size",
+                  "description": "Text size of the title. Unit: Du.",
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 400,
+                  "default": 64
+                },
+                "tracking": {
+                  "title": "Title spacing",
+                  "description": "Extra space between the letters of the title. Unit: Du.",
+                  "type": "number",
+                  "minimum": -10,
+                  "maximum": 40,
+                  "default": 3
+                },
+                "subY": {
+                  "title": "Subtitle y",
+                  "description": "Top of the subtitle. Unit: Du.",
+                  "type": "number",
+                  "minimum": -400,
+                  "maximum": 4000,
+                  "default": 340
+                },
+                "subSize": {
+                  "title": "Subtitle size",
+                  "description": "Text size of the subtitle. Unit: Du.",
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 400,
+                  "default": 34
+                },
+                "subTracking": {
+                  "title": "Subtitle spacing",
+                  "description": "Extra space between the letters of the subtitle. Unit: Du.",
+                  "type": "number",
+                  "minimum": -10,
+                  "maximum": 40,
+                  "default": 3
+                },
+                "subAlpha": {
+                  "title": "Subtitle opacity",
+                  "description": "Opacity of the subtitle relative to the title (solid text ignores it). Unit: alpha.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "default": 0.9
+                },
+                "minSize": {
+                  "title": "Title smallest size",
+                  "description": "Smallest size a long title may shrink to. Unit: Du.",
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 400,
+                  "default": 40
+                },
+                "subMinSize": {
+                  "title": "Subtitle smallest size",
+                  "description": "Smallest size a long subtitle may shrink to. Unit: Du.",
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 400,
+                  "default": 22
+                },
+                "shrinkStep": {
+                  "title": "Title shrink step",
+                  "description": "Size removed per step while a long title, subtitle or description shrinks to fit. Unit: Du.",
+                  "type": "number",
+                  "minimum": 0.5,
+                  "maximum": 60,
+                  "default": 2
+                },
+                "descY": {
+                  "title": "Description y",
+                  "description": "Top of the description line. Unit: Du.",
+                  "type": "number",
+                  "minimum": -400,
+                  "maximum": 4000,
+                  "default": 400
+                },
+                "descSize": {
+                  "title": "Description size",
+                  "description": "Text size of the description line, in the intro and in the finale. Unit: Du.",
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 400,
+                  "default": 28
+                },
+                "descTracking": {
+                  "title": "Description spacing",
+                  "description": "Extra space between the letters of the description. Unit: Du.",
+                  "type": "number",
+                  "minimum": -10,
+                  "maximum": 40,
+                  "default": 2
+                },
+                "descAlpha": {
+                  "title": "Description opacity",
+                  "description": "Opacity of the description relative to the title (solid text ignores it). Unit: alpha.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "default": 0.8
+                },
+                "descMinSize": {
+                  "title": "Description smallest size",
+                  "description": "Smallest size a long description may shrink to. Unit: Du.",
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 400,
+                  "default": 18
+                }
+              },
+              "additionalProperties": false
+            },
+            "card": {
+              "type": "object",
+              "properties": {
+                "placement": {
+                  "title": "Card placement",
+                  "description": "Card to the right of the pin, or below it from the left edge.",
+                  "enum": ["rightOfPin", "belowPin"],
+                  "default": "belowPin"
+                },
+                "x": {
+                  "title": "Card x",
+                  "description": "Right of the pin: distance from the pin; below the pin: distance from the left edge. Unit: Du.",
+                  "type": "number",
+                  "minimum": -2000,
+                  "maximum": 4000,
+                  "default": 90
+                },
+                "dy": {
+                  "title": "Card y",
+                  "description": "Vertical distance of the card from the pin. Unit: Du.",
+                  "type": "number",
+                  "minimum": -2000,
+                  "maximum": 4000,
+                  "default": 120
+                },
+                "leader": {
+                  "title": "Pointer shape",
+                  "description": "Line from the pin to the card: diagonal or vertical.",
+                  "enum": ["diagonal", "vertical"],
+                  "default": "vertical"
+                },
+                "leaderFrom": {
+                  "title": "Pointer start",
+                  "description": "Start of the pointer line, from the pin centre (right, down). Unit: Du.",
+                  "type": "array",
+                  "items": {
+                    "type": "number",
+                    "minimum": -400,
+                    "maximum": 400
+                  },
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "default": [0, 16]
+                },
+                "leaderTo": {
+                  "title": "Pointer end",
+                  "description": "End of the pointer line, from the card corner or below the pin (right, down). Unit: Du.",
+                  "type": "array",
+                  "items": {
+                    "type": "number",
+                    "minimum": -800,
+                    "maximum": 800
+                  },
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "default": [0, -14]
+                },
+                "results": {
+                  "title": "Result rows",
+                  "description": "Results side by side on one line, or one per line.",
+                  "enum": ["inline", "stacked"],
+                  "default": "stacked"
+                },
+                "partnerWrapChars": {
+                  "title": "Extra line wrap",
+                  "description": "Split the extra line in two when it is longer than this many characters; 0 never splits. Unit: chars.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 200,
+                  "default": 30
+                },
+                "barPartner": {
+                  "title": "Bar for extra line",
+                  "description": "Extra accent bar height when a stop has an extra line. Unit: Du.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 400,
+                  "default": 70
+                },
+                "resultsBarPerRow": {
+                  "title": "Bar grows per result",
+                  "description": "Grow the accent bar for every result row, instead of once.",
+                  "type": "boolean",
+                  "default": true
+                }
+              },
+              "additionalProperties": false
+            },
+            "pinLabels": {
+              "type": "object",
+              "properties": {
+                "order": {
+                  "title": "Label drawing order",
+                  "description": "Draw each label right after its pin, or all labels after all pins.",
+                  "enum": ["perPin", "afterPins"],
+                  "default": "afterPins"
+                },
+                "flipAboveX": {
+                  "title": "Flip labels after",
+                  "description": "Labels of pins right of this share of the width go on the left of their pin; empty flips a label only when it would run off the frame. With Label placement on Auto this is only the side a label prefers. Unit: frac.",
+                  "type": ["number", "null"],
+                  "minimum": 0,
+                  "maximum": 1,
+                  "default": 0.55
+                },
+                "medals": {
+                  "title": "Medal dots on labels",
+                  "description": "Show medal dots after the date on pin labels.",
+                  "type": "boolean",
+                  "default": false
+                }
+              },
+              "additionalProperties": false
+            },
+            "stats": {
+              "type": "object",
+              "properties": {
+                "x": {
+                  "title": "Stats x",
+                  "description": "Left edge of the first finale stat. Unit: Du.",
+                  "type": "number",
+                  "minimum": -400,
+                  "maximum": 4000,
+                  "default": 80
+                },
+                "y": {
+                  "title": "Stats y",
+                  "description": "Top of the first finale stat. Unit: Du.",
+                  "type": "number",
+                  "minimum": -400,
+                  "maximum": 4000,
+                  "default": 250
+                },
+                "direction": {
+                  "title": "Stats arrangement",
+                  "description": "Stats side by side in a row, or stacked in a column.",
+                  "enum": ["row", "column"],
+                  "default": "column"
+                },
+                "pitch": {
+                  "title": "Stats spacing",
+                  "description": "Distance between neighbouring stats. Unit: Du.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 2000,
+                  "default": 150
+                },
+                "numberSize": {
+                  "title": "Stats number size",
+                  "description": "Text size of the big numbers. Unit: Du.",
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 800,
+                  "default": 140
+                },
+                "labelDx": {
+                  "title": "Stats label x",
+                  "description": "Horizontal position of each stat label from its number. Unit: Du.",
+                  "type": "number",
+                  "minimum": -400,
+                  "maximum": 1200,
+                  "default": 95
+                },
+                "labelDy": {
+                  "title": "Stats label y",
+                  "description": "Vertical position of each stat label from the top of its number. Unit: Du.",
+                  "type": "number",
+                  "minimum": -400,
+                  "maximum": 1200,
+                  "default": 50
+                }
+              },
+              "additionalProperties": false
+            },
+            "safeArea": {
+              "type": "object",
+              "properties": {
+                "top": {
+                  "title": "Safe area top",
+                  "description": "Top margin of the safe-zone guide, as a share of the height. Unit: frac.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 0.5,
+                  "default": 0.12
+                },
+                "right": {
+                  "title": "Safe area right",
+                  "description": "Right margin of the safe-zone guide, as a share of the width (preview only). Unit: frac.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 0.5,
+                  "default": 0.111
+                },
+                "bottom": {
+                  "title": "Safe area bottom",
+                  "description": "Bottom margin of the safe-zone guide, as a share of the height. Unit: frac.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 0.5,
+                  "default": 0.229
+                },
+                "left": {
+                  "title": "Safe area left",
+                  "description": "Left margin of the safe-zone guide, as a share of the width (preview only). Unit: frac.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 0.5,
+                  "default": 0.056
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "square": {
+          "type": "object",
+          "properties": {
+            "fit": {
+              "type": "object",
+              "properties": {
+                "marginX": {
+                  "title": "Overview side margins",
+                  "description": "Total space left and right of the route in the overview. Unit: Du.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 4000,
+                  "default": 216
+                },
+                "marginY": {
+                  "title": "Overview top and bottom margins",
+                  "description": "Total space above and below the route in the overview. Unit: Du.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 4000,
+                  "default": 453.6
+                },
+                "nudgeDeg": {
+                  "title": "Overview nudge",
+                  "description": "Moves the overview camera by degrees of longitude and of map height. Unit: deg.",
+                  "type": "array",
+                  "items": {
+                    "type": "number",
+                    "minimum": -10,
+                    "maximum": 10
+                  },
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "default": [0, 0]
+                },
+                "nudgeMaxFrac": {
+                  "title": "Nudge limit",
+                  "description": "Largest nudge as a share of the route span, so small trips stay on screen. Unit: frac.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "default": 0.1
+                },
+                "offsetDu": {
+                  "title": "Overview offset",
+                  "description": "Moves the fitted route away from the frame centre (right, down). Unit: Du.",
+                  "type": "array",
+                  "items": {
+                    "type": "number",
+                    "minimum": -2000,
+                    "maximum": 2000
+                  },
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "default": [0, 97.2]
+                }
+              },
+              "additionalProperties": false
+            },
+            "stopPin": {
+              "title": "Stop pin position",
+              "description": "Where the pin sits on screen at each stop, from the frame centre (right, down). Unit: Du.",
+              "type": "array",
+              "items": {
+                "type": "number",
+                "minimum": -2000,
+                "maximum": 2000
+              },
+              "minItems": 2,
+              "maxItems": 2,
+              "default": [-237.6, -248.4]
+            },
+            "title": {
+              "type": "object",
+              "properties": {
+                "x": {
+                  "title": "Title x",
+                  "description": "Left edge of the title, subtitle and description. Unit: Du.",
+                  "type": "number",
+                  "minimum": -400,
+                  "maximum": 4000,
+                  "default": 72
+                },
+                "y": {
+                  "title": "Title y",
+                  "description": "Top of the title. Unit: Du.",
+                  "type": "number",
+                  "minimum": -400,
+                  "maximum": 4000,
+                  "default": 100
+                },
+                "size": {
+                  "title": "Title size",
+                  "description": "Text size of the title. Unit: Du.",
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 400,
+                  "default": 52
+                },
+                "tracking": {
+                  "title": "Title spacing",
+                  "description": "Extra space between the letters of the title. Unit: Du.",
+                  "type": "number",
+                  "minimum": -10,
+                  "maximum": 40,
+                  "default": 3
+                },
+                "subY": {
+                  "title": "Subtitle y",
+                  "description": "Top of the subtitle. Unit: Du.",
+                  "type": "number",
+                  "minimum": -400,
+                  "maximum": 4000,
+                  "default": 164
+                },
+                "subSize": {
+                  "title": "Subtitle size",
+                  "description": "Text size of the subtitle. Unit: Du.",
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 400,
+                  "default": 30
+                },
+                "subTracking": {
+                  "title": "Subtitle spacing",
+                  "description": "Extra space between the letters of the subtitle. Unit: Du.",
+                  "type": "number",
+                  "minimum": -10,
+                  "maximum": 40,
+                  "default": 3
+                },
+                "subAlpha": {
+                  "title": "Subtitle opacity",
+                  "description": "Opacity of the subtitle relative to the title (solid text ignores it). Unit: alpha.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "default": 0.9
+                },
+                "minSize": {
+                  "title": "Title smallest size",
+                  "description": "Smallest size a long title may shrink to. Unit: Du.",
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 400,
+                  "default": 34
+                },
+                "subMinSize": {
+                  "title": "Subtitle smallest size",
+                  "description": "Smallest size a long subtitle may shrink to. Unit: Du.",
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 400,
+                  "default": 20
+                },
+                "shrinkStep": {
+                  "title": "Title shrink step",
+                  "description": "Size removed per step while a long title, subtitle or description shrinks to fit. Unit: Du.",
+                  "type": "number",
+                  "minimum": 0.5,
+                  "maximum": 60,
+                  "default": 2
+                },
+                "descY": {
+                  "title": "Description y",
+                  "description": "Top of the description line. Unit: Du.",
+                  "type": "number",
+                  "minimum": -400,
+                  "maximum": 4000,
+                  "default": 210
+                },
+                "descSize": {
+                  "title": "Description size",
+                  "description": "Text size of the description line, in the intro and in the finale. Unit: Du.",
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 400,
+                  "default": 24
+                },
+                "descTracking": {
+                  "title": "Description spacing",
+                  "description": "Extra space between the letters of the description. Unit: Du.",
+                  "type": "number",
+                  "minimum": -10,
+                  "maximum": 40,
+                  "default": 2
+                },
+                "descAlpha": {
+                  "title": "Description opacity",
+                  "description": "Opacity of the description relative to the title (solid text ignores it). Unit: alpha.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "default": 0.8
+                },
+                "descMinSize": {
+                  "title": "Description smallest size",
+                  "description": "Smallest size a long description may shrink to. Unit: Du.",
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 400,
+                  "default": 16
+                }
+              },
+              "additionalProperties": false
+            },
+            "card": {
+              "type": "object",
+              "properties": {
+                "placement": {
+                  "title": "Card placement",
+                  "description": "Card to the right of the pin, or below it from the left edge.",
+                  "enum": ["rightOfPin", "belowPin"],
+                  "default": "belowPin"
+                },
+                "x": {
+                  "title": "Card x",
+                  "description": "Right of the pin: distance from the pin; below the pin: distance from the left edge. Unit: Du.",
+                  "type": "number",
+                  "minimum": -2000,
+                  "maximum": 4000,
+                  "default": 80
+                },
+                "dy": {
+                  "title": "Card y",
+                  "description": "Vertical distance of the card from the pin. Unit: Du.",
+                  "type": "number",
+                  "minimum": -2000,
+                  "maximum": 4000,
+                  "default": 110
+                },
+                "leader": {
+                  "title": "Pointer shape",
+                  "description": "Line from the pin to the card: diagonal or vertical.",
+                  "enum": ["diagonal", "vertical"],
+                  "default": "vertical"
+                },
+                "leaderFrom": {
+                  "title": "Pointer start",
+                  "description": "Start of the pointer line, from the pin centre (right, down). Unit: Du.",
+                  "type": "array",
+                  "items": {
+                    "type": "number",
+                    "minimum": -400,
+                    "maximum": 400
+                  },
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "default": [0, 16]
+                },
+                "leaderTo": {
+                  "title": "Pointer end",
+                  "description": "End of the pointer line, from the card corner or below the pin (right, down). Unit: Du.",
+                  "type": "array",
+                  "items": {
+                    "type": "number",
+                    "minimum": -800,
+                    "maximum": 800
+                  },
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "default": [0, -14]
+                },
+                "results": {
+                  "title": "Result rows",
+                  "description": "Results side by side on one line, or one per line.",
+                  "enum": ["inline", "stacked"],
+                  "default": "stacked"
+                },
+                "partnerWrapChars": {
+                  "title": "Extra line wrap",
+                  "description": "Split the extra line in two when it is longer than this many characters; 0 never splits. Unit: chars.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 200,
+                  "default": 30
+                },
+                "barPartner": {
+                  "title": "Bar for extra line",
+                  "description": "Extra accent bar height when a stop has an extra line. Unit: Du.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 400,
+                  "default": 70
+                },
+                "resultsBarPerRow": {
+                  "title": "Bar grows per result",
+                  "description": "Grow the accent bar for every result row, instead of once.",
+                  "type": "boolean",
+                  "default": true
+                }
+              },
+              "additionalProperties": false
+            },
+            "pinLabels": {
+              "type": "object",
+              "properties": {
+                "order": {
+                  "title": "Label drawing order",
+                  "description": "Draw each label right after its pin, or all labels after all pins.",
+                  "enum": ["perPin", "afterPins"],
+                  "default": "afterPins"
+                },
+                "flipAboveX": {
+                  "title": "Flip labels after",
+                  "description": "Labels of pins right of this share of the width go on the left of their pin; empty flips a label only when it would run off the frame. With Label placement on Auto this is only the side a label prefers. Unit: frac.",
+                  "type": ["number", "null"],
+                  "minimum": 0,
+                  "maximum": 1,
+                  "default": 0.55
+                },
+                "medals": {
+                  "title": "Medal dots on labels",
+                  "description": "Show medal dots after the date on pin labels.",
+                  "type": "boolean",
+                  "default": false
+                }
+              },
+              "additionalProperties": false
+            },
+            "stats": {
+              "type": "object",
+              "properties": {
+                "x": {
+                  "title": "Stats x",
+                  "description": "Left edge of the first finale stat. Unit: Du.",
+                  "type": "number",
+                  "minimum": -400,
+                  "maximum": 4000,
+                  "default": 80
+                },
+                "y": {
+                  "title": "Stats y",
+                  "description": "Top of the first finale stat. Unit: Du.",
+                  "type": "number",
+                  "minimum": -400,
+                  "maximum": 4000,
+                  "default": 90
+                },
+                "direction": {
+                  "title": "Stats arrangement",
+                  "description": "Stats side by side in a row, or stacked in a column.",
+                  "enum": ["row", "column"],
+                  "default": "row"
+                },
+                "pitch": {
+                  "title": "Stats spacing",
+                  "description": "Distance between neighbouring stats. Unit: Du.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 2000,
+                  "default": 320
+                },
+                "numberSize": {
+                  "title": "Stats number size",
+                  "description": "Text size of the big numbers. Unit: Du.",
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 800,
+                  "default": 150
+                },
+                "labelDx": {
+                  "title": "Stats label x",
+                  "description": "Horizontal position of each stat label from its number. Unit: Du.",
+                  "type": "number",
+                  "minimum": -400,
+                  "maximum": 1200,
+                  "default": 100
+                },
+                "labelDy": {
+                  "title": "Stats label y",
+                  "description": "Vertical position of each stat label from the top of its number. Unit: Du.",
+                  "type": "number",
+                  "minimum": -400,
+                  "maximum": 1200,
+                  "default": 55
+                }
+              },
+              "additionalProperties": false
+            },
+            "safeArea": {
+              "type": "object",
+              "properties": {
+                "top": {
+                  "title": "Safe area top",
+                  "description": "Top margin of the safe-zone guide, as a share of the height. Unit: frac.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 0.5,
+                  "default": 0.06
+                },
+                "right": {
+                  "title": "Safe area right",
+                  "description": "Right margin of the safe-zone guide, as a share of the width (preview only). Unit: frac.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 0.5,
+                  "default": 0.06
+                },
+                "bottom": {
+                  "title": "Safe area bottom",
+                  "description": "Bottom margin of the safe-zone guide, as a share of the height. Unit: frac.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 0.5,
+                  "default": 0.06
+                },
+                "left": {
+                  "title": "Safe area left",
+                  "description": "Left margin of the safe-zone guide, as a share of the width (preview only). Unit: frac.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 0.5,
+                  "default": 0.06
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

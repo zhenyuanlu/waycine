@@ -1,0 +1,165 @@
+{
+  "$schema": "https://zhenyuanlu.github.io/waycine/schema/v1.json",
+  "version": 1,
+  "meta": {
+    "name": "Road trip demo"
+  },
+  "stops": [
+    {
+      "id": "las-vegas",
+      "city": "Las Vegas",
+      "lat": 36.1699,
+      "lon": -115.1398,
+      "event": "Pick up the camper van",
+      "date": "2026-09-12",
+      "region": "NV",
+      "regionCode": "US-NV",
+      "country": "US"
+    },
+    {
+      "id": "zion",
+      "city": "Zion",
+      "lat": 37.2982,
+      "lon": -113.0263,
+      "event": "Angels Landing at sunrise",
+      "date": "2026-09-13",
+      "endDate": "2026-09-14",
+      "region": "UT",
+      "regionCode": "US-UT",
+      "country": "US"
+    },
+    {
+      "id": "bryce-canyon",
+      "city": "Bryce Canyon",
+      "lat": 37.593,
+      "lon": -112.1871,
+      "event": "Hoodoos under the stars",
+      "date": "2026-09-15",
+      "region": "UT",
+      "regionCode": "US-UT",
+      "country": "US"
+    },
+    {
+      "id": "capitol-reef",
+      "city": "Capitol Reef",
+      "lat": 38.2916,
+      "lon": -111.2617,
+      "event": "Orchards and the scenic drive",
+      "date": "2026-09-16",
+      "region": "UT",
+      "regionCode": "US-UT",
+      "country": "US"
+    },
+    {
+      "id": "arches",
+      "city": "Arches",
+      "lat": 38.7331,
+      "lon": -109.5925,
+      "event": "Delicate Arch by headlamp",
+      "date": "2026-09-17",
+      "endDate": "2026-09-18",
+      "region": "UT",
+      "regionCode": "US-UT",
+      "country": "US"
+    },
+    {
+      "id": "monument-valley",
+      "city": "Monument Valley",
+      "lat": 36.998,
+      "lon": -110.0985,
+      "event": "Sunset on the valley loop",
+      "date": "2026-09-19",
+      "region": "AZ",
+      "regionCode": "US-AZ",
+      "country": "US"
+    },
+    {
+      "id": "grand-canyon",
+      "city": "Grand Canyon",
+      "lat": 36.0544,
+      "lon": -112.1401,
+      "event": "South Rim to the river and back",
+      "date": "2026-09-20",
+      "endDate": "2026-09-21",
+      "region": "AZ",
+      "regionCode": "US-AZ",
+      "country": "US",
+      "durationSec": 3
+    },
+    {
+      "id": "las-vegas-return",
+      "city": "Las Vegas",
+      "lat": 36.1699,
+      "lon": -115.1398,
+      "event": "Back where we started",
+      "date": "2026-09-22",
+      "region": "NV",
+      "regionCode": "US-NV",
+      "country": "US"
+    }
+  ],
+  "text": {
+    "title": "Southwest parks loop",
+    "subtitle": "{days} DAYS  /  {regions|STATE|STATES}  /  {mi} MILES",
+    "description": "Six parks, one camper van, no fixed plans.",
+    "descriptionAt": "introAndFinale",
+    "kicker": "STOP {n} OF {total}",
+    "cardDate": "MMM D",
+    "pinDate": "MMM D"
+  },
+  "theme": {
+    "id": "ember",
+    "background": "#0C0806",
+    "grid": "#FFF7ED",
+    "route": "#FDBA74",
+    "glow": "#7C2D12",
+    "pin": "#F97316",
+    "pinCore": "#FFF7ED",
+    "text": "#FFF7ED",
+    "accent": "#F97316",
+    "flash": "#FFFFFF",
+    "medals": {
+      "gold": "#E8C15A",
+      "silver": "#CFD4DC",
+      "bronze": "#CD8C5C",
+      "ring": "#F97316"
+    }
+  },
+  "timing": {
+    "stopSec": 1.8,
+    "endHoldSec": 1,
+    "transition": {
+      "mode": "zoomThrough",
+      "flashTo": "background"
+    }
+  },
+  "stats": {
+    "items": [
+      {
+        "source": "days",
+        "label": "DAYS",
+        "labelOne": "DAY"
+      },
+      {
+        "source": "regions",
+        "label": "STATES",
+        "labelOne": "STATE"
+      },
+      {
+        "source": "mi",
+        "label": "MILES",
+        "labelOne": "MILE"
+      }
+    ]
+  },
+  "route": {
+    "bulgeSide": "left"
+  },
+  "output": {
+    "aspect": "1:1",
+    "shortSide": 1080,
+    "fps": 24,
+    "layout": "auto",
+    "exportMode": "single"
+  }
+}

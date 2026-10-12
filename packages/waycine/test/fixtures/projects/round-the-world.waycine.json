@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "meta": { "name": "Round the world" },
+  "stops": [
+    {
+      "id": "london-out",
+      "city": "London",
+      "lat": 51.5074,
+      "lon": -0.1278,
+      "event": "Departure",
+      "date": "2026-04-01",
+      "country": "GB"
+    },
+    {
+      "id": "new-york",
+      "city": "New York",
+      "lat": 40.7128,
+      "lon": -74.006,
+      "event": "Broadway",
+      "date": "2026-04-05",
+      "country": "US"
+    },
+    {
+      "id": "san-francisco",
+      "city": "San Francisco",
+      "lat": 37.7749,
+      "lon": -122.4194,
+      "event": "The bay",
+      "date": "2026-04-10",
+      "country": "US"
+    },
+    {
+      "id": "tokyo",
+      "city": "Tokyo",
+      "lat": 35.6762,
+      "lon": 139.6503,
+      "event": "Cherry blossom",
+      "date": "2026-04-15",
+      "country": "JP"
+    },
+    {
+      "id": "singapore",
+      "city": "Singapore",
+      "lat": 1.3521,
+      "lon": 103.8198,
+      "event": "Gardens",
+      "date": "2026-04-20",
+      "country": "SG"
+    },
+    {
+      "id": "dubai",
+      "city": "Dubai",
+      "lat": 25.2048,
+      "lon": 55.2708,
+      "event": "Desert",
+      "date": "2026-04-24",
+      "country": "AE"
+    },
+    {
+      "id": "london-home",
+      "city": "London",
+      "lat": 51.5074,
+      "lon": -0.1278,
+      "event": "Home again",
+      "date": "2026-04-28",
+      "country": "GB"
+    }
+  ],
+  "output": { "aspect": "16:9", "shortSide": 720, "fps": 30 }
+}
