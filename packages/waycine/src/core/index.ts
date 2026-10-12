@@ -9,7 +9,7 @@
  */
 
 /** Engine version. Kept equal to the `version` field of this package. */
-export const VERSION = '0.1.0';
+export const VERSION = '0.1.1';
 
 export { type CompileOptions, compile } from './compile.js';
 export type {

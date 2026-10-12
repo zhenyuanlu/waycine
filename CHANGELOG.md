@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-10-12
+
+### Changed
+
+- The author link of both packages points to the author's website.
+- Both packages are published to npm by the release workflow (npm trusted
+  publishing); this is the first version released that way.
+
 ## [0.1.0] - 2026-10-12
 
 The first public release: the engine (`waycine`), the command-line renderer
@@ -155,5 +163,6 @@ The first public release: the engine (`waycine`), the command-line renderer
   workflow that publishes both packages to npm when a GitHub release is
   published; a repository hygiene check.
 
-[Unreleased]: https://github.com/zhenyuanlu/waycine/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/zhenyuanlu/waycine/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/zhenyuanlu/waycine/releases/tag/v0.1.1
 [0.1.0]: https://github.com/zhenyuanlu/waycine/releases/tag/v0.1.0

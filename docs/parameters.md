@@ -3,7 +3,7 @@
 # Project settings
 
 Every setting of a Waycine project file (`.waycine.json`, schema version 1), as of
-Waycine 0.1.0. This page is generated from the engine's settings catalog (`FIELDS`),
+Waycine 0.1.1. This page is generated from the engine's settings catalog (`FIELDS`),
 which also drives the web editor, validation, the
 [JSON Schema](https://zhenyuanlu.github.io/waycine/schema/v1.json) and `waycine params`.
 

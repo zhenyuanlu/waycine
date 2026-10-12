@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://zhenyuanlu.github.io/waycine/schema/v1.json",
   "title": "Waycine project",
-  "description": "A Waycine project file (.waycine.json), schema version 1, as of Waycine 0.1.0. Every setting except version and stops is optional and defaults to the value given here. Generated from the settings catalog by scripts/gen-docs.mjs.",
+  "description": "A Waycine project file (.waycine.json), schema version 1, as of Waycine 0.1.1. Every setting except version and stops is optional and defaults to the value given here. Generated from the settings catalog by scripts/gen-docs.mjs.",
   "type": "object",
   "required": ["version", "stops"],
   "properties": {

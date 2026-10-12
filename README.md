@@ -10,7 +10,7 @@ Waycine ("way cinema") turns a list of stops into an animated travel map
 video of your trip, road trip, tour or race season.<br>
 Free and open source. It runs in your browser, and nothing is uploaded.
 
-[![Version 0.1.0](https://img.shields.io/badge/version-0.1.0-blue.svg)](CHANGELOG.md)
+[![Version 0.1.1](https://img.shields.io/badge/version-0.1.1-blue.svg)](CHANGELOG.md)
 [![waycine on npm](https://img.shields.io/npm/v/waycine.svg?label=npm)](https://www.npmjs.com/package/waycine)
 [![CI](https://github.com/zhenyuanlu/waycine/actions/workflows/ci.yml/badge.svg)](https://github.com/zhenyuanlu/waycine/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
