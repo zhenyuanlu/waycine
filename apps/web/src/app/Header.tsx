@@ -159,7 +159,7 @@ function PhoneHeader() {
     },
     { kind: 'sep' },
     { kind: 'link', label: copy.header.licenses, href: LICENSES_URL },
-    { kind: 'link', label: copy.header.source, href: SOURCE_URL },
+    { kind: 'link', label: copy.header.source, href: SOURCE_URL, icon: 'github' },
     { kind: 'sep' },
     { kind: 'cap', label: copy.header.theme },
     ...themeItems(),
@@ -187,7 +187,7 @@ function PhoneHeader() {
   );
 }
 
-/** Wordmark, project name and save state; undo, file actions, theme, Export video and theater mode. */
+/** Wordmark, the repository link, project name and save state; undo, file actions, theme, Export video and theater mode. */
 export function Header() {
   if (isPhone.value) return <PhoneHeader />;
   const hidden = theater.value;
@@ -214,7 +214,7 @@ export function Header() {
     { kind: 'item', label: copy.header.share, onSelect: () => (dialog.value = { kind: 'share' }) },
     { kind: 'sep' },
     { kind: 'link', label: copy.header.licenses, href: LICENSES_URL },
-    { kind: 'link', label: copy.header.source, href: SOURCE_URL },
+    { kind: 'link', label: copy.header.source, href: SOURCE_URL, icon: 'github' },
   ];
   return (
     <header class="bar">
@@ -227,6 +227,17 @@ export function Header() {
         {copy.app.skipToEditor}
       </button>
       <h1 class="wordmark">{copy.app.name}</h1>
+      <a
+        class="btn-line sm gh-link"
+        href={SOURCE_URL}
+        target="_blank"
+        rel="noopener"
+        aria-label={copy.header.source}
+        title={copy.header.sourceHint}
+      >
+        <UiIcon name="github" />
+        {copy.header.sourceShort}
+      </a>
       <span class="bar-sep" aria-hidden="true" />
       <ProjectName />
       <SaveState />

@@ -948,6 +948,11 @@ html.scrubbing * {
   white-space: nowrap;
   margin-right: var(--s2);
 }
+/* The repository link sits beside the wordmark: the mark and its name, always in view. */
+.gh-link {
+  flex: none;
+  margin-right: var(--s2);
+}
 .bar-sep {
   width: 1px;
   height: calc(18rem / 13);

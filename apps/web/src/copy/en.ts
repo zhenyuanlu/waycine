@@ -47,6 +47,8 @@ export const copy = {
     safeZone: 'Safe zone',
     licenses: 'Licenses',
     source: 'Source on GitHub',
+    sourceShort: 'GitHub',
+    sourceHint: 'Open the Waycine repository on GitHub in a new tab',
   },
   saveState: {
     saving: 'Saving…',

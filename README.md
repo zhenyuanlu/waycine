@@ -11,13 +11,16 @@ video of your trip, road trip, tour or race season.<br>
 Free and open source. It runs in your browser, and nothing is uploaded.
 
 [![Version 0.1.0, pre-release](https://img.shields.io/badge/version-0.1.0_pre--release-orange.svg)](CHANGELOG.md)
+[![waycine on npm](https://img.shields.io/npm/v/waycine.svg?label=npm)](https://www.npmjs.com/package/waycine)
 [![CI](https://github.com/zhenyuanlu/waycine/actions/workflows/ci.yml/badge.svg)](https://github.com/zhenyuanlu/waycine/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Node.js 22.12 or newer](https://img.shields.io/badge/node-%3E%3D22.12-339933.svg)](CONTRIBUTING.md#setup)
 [![TypeScript, strict](https://img.shields.io/badge/TypeScript-strict-3178C6.svg)](tsconfig.base.json)
+[![A hobby project, made for fun](https://img.shields.io/badge/hobby_project-made_for_fun-ff69b4.svg)](#why-i-built-this)
 
-**[Open the app](https://zhenyuanlu.com/waycine/)**
-&nbsp;·&nbsp; [Demos](#demos)
+[![Open the app at zhenyuanlu.com/waycine](https://img.shields.io/badge/Open_the_app-zhenyuanlu.com%2Fwaycine-660874?style=for-the-badge)](https://zhenyuanlu.com/waycine/)
+
+[Demos](#demos)
 &nbsp;·&nbsp; [Features](#features)
 &nbsp;·&nbsp; [Library](#use-it-as-a-library)
 &nbsp;·&nbsp; [Command line](#command-line)
@@ -144,11 +147,15 @@ season: a map that draws the route from race to race. I thought that map
 could be useful to other people too, for a trip, a tour or a season of their
 own, so I rebuilt it as an open-source tool that anyone can use.
 
+Made by [Zhenyuan Lu](https://github.com/zhenyuanlu).
+
 ## Use it as a library
 
 ```sh
 npm install waycine
 ```
+
+On npm: [waycine](https://www.npmjs.com/package/waycine).
 
 | Import | For |
 | --- | --- |
@@ -178,6 +185,8 @@ that cannot encode are covered in the
 ```sh
 npm install -g @waycine/cli
 ```
+
+On npm: [@waycine/cli](https://www.npmjs.com/package/@waycine/cli).
 
 ```sh
 waycine init --preset europe-trip -o trip.waycine.json   # start from a demo
@@ -268,7 +277,7 @@ the web app in `apps/web`.
 
 ## Credits and licenses
 
-Waycine is released under the [MIT License](LICENSE).
+Waycine is released under the [MIT License](LICENSE), copyright Zhenyuan Lu.
 
 It builds on [Mediabunny](https://github.com/Vanilagy/mediabunny) (MPL-2.0,
 used unmodified) for in-browser encoding, the

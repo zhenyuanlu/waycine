@@ -215,10 +215,19 @@ Before you open a pull request:
    http://127.0.0.1:25181/waycine/, play a preset and export a video.
 7. Commit steps 2 to 4 as the release commit, then tag `vX.Y.Z` on that
    commit and push; the Pages workflow deploys the site from `main`.
-8. Publish with two-factor authentication: `npm publish -w waycine --access public`,
-   then `npm publish -w @waycine/cli --access public`. Each package builds
-   its `dist/` first (`prepublishOnly` runs `tsc -b`).
-9. Create the GitHub release from the tag with the changelog section.
+8. Create the GitHub release from the tag with the changelog section.
+   Publishing the release starts the Release workflow
+   (`.github/workflows/release.yml`): it checks that the tag matches the
+   package versions, runs the checks again and publishes `waycine`, then
+   `@waycine/cli`, to npm. It uses npm trusted publishing, so no npm token
+   is stored in the repository; a version that is already on npm is skipped.
+9. First release only, or when the workflow cannot run: publish by hand with
+   two-factor authentication, `npm publish -w waycine --access public`, then
+   `npm publish -w @waycine/cli --access public` (each package builds its
+   `dist/` first: `prepublishOnly` runs `tsc -b`). A trusted publisher can
+   only be set on a package that exists, so after the first publish open each
+   package's settings on npmjs.com and add the trusted publisher: GitHub
+   Actions, `zhenyuanlu` / `waycine`, workflow `release.yml`.
 10. First release only: once the site loads and both packages are on npm,
     remove the "Pre-release" notes from `README.md`, `docs/cli.md` and
     `docs/browser-support.md`, "pre-release" from the version badge in

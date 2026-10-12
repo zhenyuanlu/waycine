@@ -1,0 +1,95 @@
+name: Release
+
+# Publishing a GitHub release publishes both npm packages. The release's tag
+# must be "v" plus the version in the two package.json files (v0.1.0 for 0.1.0).
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+# One publish at a time; a running publish is never cancelled.
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+# Every action is pinned to a full commit SHA; the comment names its release tag.
+jobs:
+  publish:
+    name: publish to npm
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      # npm trusted publishing: the job proves where it runs with an OIDC token,
+      # so no npm token is stored in the repository. Each package names this
+      # workflow as its trusted publisher on npmjs.com.
+      id-token: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+          cache: npm
+          registry-url: https://registry.npmjs.org
+
+      - name: Check the tag against the package versions
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          engine="$(node -p "require('./packages/waycine/package.json').version")"
+          cli="$(node -p "require('./packages/cli/package.json').version")"
+          dep="$(node -p "require('./packages/cli/package.json').dependencies.waycine")"
+          echo "tag $TAG, waycine $engine, @waycine/cli $cli (depends on waycine $dep)"
+          if [ "$TAG" != "v$engine" ] || [ "$cli" != "$engine" ] || [ "$dep" != "$engine" ]; then
+            echo "::error::The release tag must be v$engine, and both packages and the CLI's waycine dependency must have the same version."
+            exit 1
+          fi
+          echo "VERSION=$engine" >> "$GITHUB_ENV"
+
+      # Trusted publishing needs npm 11.5.1 or newer; Node 24 ships a newer one.
+      - name: Check the npm version
+        run: |
+          node -e "
+            const [major, minor, patch] = process.argv[1].split('.').map(Number);
+            const ok = major > 11 || (major === 11 && (minor > 5 || (minor === 5 && patch >= 1)));
+            console.log('npm ' + process.argv[1]);
+            if (!ok) {
+              console.error('::error::npm 11.5.1 or newer is required for trusted publishing.');
+              process.exit(1);
+            }
+          " "$(npm --version)"
+
+      - run: npm ci
+
+      # The same gate as CI's check job.
+      - run: npm run build
+      - run: npm run check
+      - run: npm run typecheck
+      - run: npm test
+
+      # The engine first: the CLI depends on exactly this version of it. A version
+      # that is already on npm is skipped, so a run can be repeated.
+      - name: Publish waycine
+        run: |
+          if [ -n "$(npm view "waycine@$VERSION" version 2>/dev/null)" ]; then
+            echo "waycine@$VERSION is already on npm; skipped"
+          else
+            npm publish -w waycine --access public
+          fi
+
+      - name: Publish @waycine/cli
+        run: |
+          if [ -n "$(npm view "@waycine/cli@$VERSION" version 2>/dev/null)" ]; then
+            echo "@waycine/cli@$VERSION is already on npm; skipped"
+          else
+            npm publish -w @waycine/cli --access public
+          fi

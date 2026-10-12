@@ -158,7 +158,7 @@ export type MenuEntry =
   | { kind: 'radio'; label: string; checked: boolean; onSelect: () => void; icon?: UiIconName }
   | { kind: 'check'; label: string; checked: boolean; onSelect: () => void }
   /** A link that opens in a new tab. */
-  | { kind: 'link'; label: string; href: string; hint?: string }
+  | { kind: 'link'; label: string; href: string; hint?: string; icon?: UiIconName }
   | { kind: 'sep' }
   | { kind: 'cap'; label: string };
 
@@ -311,7 +311,9 @@ export function MenuButton({
                       title={item.hint}
                       onClick={close}
                     >
-                      <span class="menu-mark" aria-hidden="true" />
+                      <span class="menu-mark" aria-hidden="true">
+                        {item.icon && <UiIcon name={item.icon} size={14} />}
+                      </span>
                       <span>{item.label}</span>
                     </a>
                   );

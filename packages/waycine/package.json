@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Trip map video engine: turn a list of stops into an animated travel map video (a route that draws itself, stop cards, totals), in the browser or in Node.",
   "license": "MIT",
-  "author": "Waycine contributors",
+  "author": "Zhenyuan Lu (https://github.com/zhenyuanlu)",
   "homepage": "https://github.com/zhenyuanlu/waycine#readme",
   "repository": {
     "type": "git",

@@ -59,7 +59,7 @@ command-line renderer (`@waycine/cli`) and the no-code web app.
   also after a reload.
 - "Licenses" and "Source on GitHub" links at the end of the editor and in the
   File menu (the phone's More menu); the licenses open the third-party notices
-  the site serves.
+  the site serves. The header also links to the source with the GitHub mark.
 - Autosave in the browser, recent projects, undo and redo (Ctrl+Z,
   Ctrl+Shift+Z), open and save `.waycine.json` files (Ctrl+O, Ctrl+S, or drop
   a file on the page), share links that carry the whole project in the
@@ -148,7 +148,8 @@ command-line renderer (`@waycine/cli`) and the no-code web app.
 - Tests: camera and layout numbers of every frame checked against recorded
   reference states (numbers only), golden frames, settings-catalog coverage
   and liveness, and browser tests; `npm run bench` against the performance
-  budget; `npm run docs:gen`; CI and GitHub Pages workflows; a repository
-  hygiene check.
+  budget; `npm run docs:gen`; CI and GitHub Pages workflows, and a release
+  workflow that publishes both packages to npm when a GitHub release is
+  published; a repository hygiene check.
 
 [Unreleased]: https://github.com/zhenyuanlu/waycine/commits/main

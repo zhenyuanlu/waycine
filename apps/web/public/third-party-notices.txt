@@ -267,6 +267,14 @@ search-as-you-type, at most one request per second, results cached in your
 browser, and the attribution shown. Waycine does not include Nominatim
 software.
 
+GitHub mark
+===========
+
+The web app's link to the source code shows the GitHub mark. GitHub and the
+GitHub mark are trademarks of GitHub, Inc. The mark is used only to link to
+this project's repository on GitHub; Waycine is not affiliated with or
+endorsed by GitHub.
+
 ffmpeg (not distributed)
 ========================
 
