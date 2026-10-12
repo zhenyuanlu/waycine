@@ -67,7 +67,7 @@ jobs:
           retention-days: 14
 
       # Lists what npm would publish for both public packages.
-      - run: npm pack --dry-run -w waycine -w @waycine/cli
+      - run: npm pack --dry-run -w waycine -w waycine-cli
 
   e2e:
     name: e2e (Chrome)
@@ -99,7 +99,7 @@ jobs:
       # the specs resolve `waycine` to source through the web app's tsconfig paths.
       # `npm run e2e`, plus an HTML report to upload when something fails.
       - name: npm run e2e
-        run: npm run e2e -w @waycine/web -- --reporter=github,html
+        run: npm run e2e -w waycine-web -- --reporter=github,html
 
       - name: Upload the Playwright report
         if: failure()

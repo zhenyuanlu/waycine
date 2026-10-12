@@ -33,7 +33,7 @@ original", they mean that renderer; the parity fixtures keep only its numbers.
 | Path | What it is |
 | --- | --- |
 | `packages/waycine` | The engine, published as `waycine`: `src/core` (no DOM, no dependencies), `src/browser`, `src/node`, `fonts/`, `presets/`, `test/` |
-| `packages/cli` | The `waycine` command, published as `@waycine/cli` |
+| `packages/cli` | The `waycine` command, published as `waycine-cli` |
 | `apps/web` | The web app (Preact, Vite), private; `e2e/` holds the Playwright specs |
 | `docs` | User documentation; `docs/parameters.md` is generated |
 | `scripts` | Repository tools: hygiene check, docs generator, bench, golden update, font metrics |
@@ -53,7 +53,7 @@ original", they mean that renderer; the parity fixtures keep only its numbers.
 | `npm run golden:update` | Re-renders the golden frames after an intended visual change |
 | `npm run docs:gen` | Regenerates `docs/parameters.md`, the JSON Schema and the site's third-party notices |
 | `npm run fonts:metrics` | Regenerates `packages/waycine/fonts/metrics.json` after a bundled font is replaced |
-| `npm run preview:pages -w @waycine/web` | Builds the site as GitHub Pages serves it and previews it at http://127.0.0.1:25181/waycine/ |
+| `npm run preview:pages -w waycine-web` | Builds the site as GitHub Pages serves it and previews it at http://127.0.0.1:25181/waycine/ |
 
 ### Ports
 
@@ -208,10 +208,10 @@ Before you open a pull request:
    `[Unreleased]` comparing the new tag with `HEAD`).
 4. Run `npm run docs:gen` (the schema and settings page name the version),
    then `npm run verify` and `npm run e2e`.
-5. Check what npm will publish: `npm pack --dry-run -w waycine -w @waycine/cli`
+5. Check what npm will publish: `npm pack --dry-run -w waycine -w waycine-cli`
    lists only `dist/`, `fonts/`, `presets/`, the READMEs, `LICENSE` files and
    `THIRD_PARTY_NOTICES.md`.
-6. Check the site: `npm run preview:pages -w @waycine/web`, open
+6. Check the site: `npm run preview:pages -w waycine-web`, open
    http://127.0.0.1:25181/waycine/, play a preset and export a video.
 7. Commit steps 2 to 4 as the release commit, then tag `vX.Y.Z` on that
    commit and push; the Pages workflow deploys the site from `main`.
@@ -219,11 +219,11 @@ Before you open a pull request:
    Publishing the release starts the Release workflow
    (`.github/workflows/release.yml`): it checks that the tag matches the
    package versions, runs the checks again and publishes `waycine`, then
-   `@waycine/cli`, to npm. It uses npm trusted publishing, so no npm token
+   `waycine-cli`, to npm. It uses npm trusted publishing, so no npm token
    is stored in the repository; a version that is already on npm is skipped.
 9. First release only, or when the workflow cannot run: publish by hand with
    two-factor authentication, `npm publish -w waycine --access public`, then
-   `npm publish -w @waycine/cli --access public` (each package builds its
+   `npm publish -w waycine-cli --access public` (each package builds its
    `dist/` first: `prepublishOnly` runs `tsc -b`). A trusted publisher can
    only be set on a package that exists, so after the first publish open each
    package's settings on npmjs.com and add the trusted publisher: GitHub

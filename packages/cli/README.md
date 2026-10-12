@@ -1,4 +1,4 @@
-# @waycine/cli
+# waycine-cli
 
 **Trip map video maker: your journey, in motion.** The `waycine` command
 renders [Waycine](https://github.com/zhenyuanlu/waycine) videos (animated travel
@@ -9,7 +9,7 @@ It uses the same engine as the Waycine web app and the bundled Barlow fonts.
 ## Install
 
 ```sh
-npm install -g @waycine/cli
+npm install -g waycine-cli
 waycine --help
 ```
 

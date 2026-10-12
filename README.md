@@ -34,7 +34,7 @@ Free and open source. It runs in your browser, and nothing is uploaded.
 </div>
 
 > **Pre-release.** Version 0.1.0 is being prepared. The web app is online; the
-> npm packages `waycine` and `@waycine/cli` are not published yet, so until
+> npm packages `waycine` and `waycine-cli` are not published yet, so until
 > they are, run the library and the CLI
 > [from source](docs/cli.md#from-source).
 
@@ -183,10 +183,10 @@ that cannot encode are covered in the
 ## Command line
 
 ```sh
-npm install -g @waycine/cli
+npm install -g waycine-cli
 ```
 
-On npm: [@waycine/cli](https://www.npmjs.com/package/@waycine/cli).
+On npm: [waycine-cli](https://www.npmjs.com/package/waycine-cli).
 
 ```sh
 waycine init --preset europe-trip -o trip.waycine.json   # start from a demo

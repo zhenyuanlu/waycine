@@ -1,5 +1,5 @@
 {
-  "name": "@waycine/web",
+  "name": "waycine-web",
   "version": "0.1.0",
   "private": true,
   "description": "Waycine no-code web app, a trip map video maker: edit a journey and export an animated travel map video (MP4) in the browser.",

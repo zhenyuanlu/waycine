@@ -13,13 +13,13 @@
     "node": ">=22.12"
   },
   "scripts": {
-    "dev": "npm run dev -w @waycine/web",
-    "build": "tsc -b && npm run build -w @waycine/web",
+    "dev": "npm run dev -w waycine-web",
+    "build": "tsc -b && npm run build -w waycine-web",
     "typecheck": "tsc -b",
     "test": "vitest run",
     "check": "biome ci . && node scripts/check-hygiene.mjs",
     "verify": "npm run check && npm run typecheck && npm test && npm run build",
-    "e2e": "npm run e2e -w @waycine/web",
+    "e2e": "npm run e2e -w waycine-web",
     "bench": "node scripts/bench.mjs",
     "golden:update": "node scripts/golden-update.mjs",
     "docs:gen": "node scripts/gen-docs.mjs",

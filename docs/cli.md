@@ -21,7 +21,7 @@ Requirements:
 Once published:
 
 ```sh
-npm install -g @waycine/cli
+npm install -g waycine-cli
 waycine --help
 ```
 

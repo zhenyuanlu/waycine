@@ -1,5 +1,5 @@
 {
-  "name": "@waycine/cli",
+  "name": "waycine-cli",
   "version": "0.1.0",
   "description": "Command-line renderer for Waycine, the trip map video maker: animated travel map videos as MP4 (with your ffmpeg), clips, PNG frames and stills.",
   "license": "MIT",

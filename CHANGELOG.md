@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 Planned as 0.1.0, the first public release: the engine (`waycine`), the
-command-line renderer (`@waycine/cli`) and the no-code web app.
+command-line renderer (`waycine-cli`) and the no-code web app.
 
 ### Added
 
@@ -128,7 +128,7 @@ command-line renderer (`@waycine/cli`) and the no-code web app.
   `day-trip` (one day in one place with clock times, 4:5). Together they
   use every format, transition and built-in theme.
 
-#### Command line (`@waycine/cli`)
+#### Command line (`waycine-cli`)
 
 - `waycine render` (MP4 through an ffmpeg you install, one clip per segment,
   or PNG frames), `still`, `info`, `validate`, `init` and `params`, with

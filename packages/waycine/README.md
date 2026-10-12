@@ -8,7 +8,7 @@ every stop, and a finale with the totals of the trip.
 This package is the engine. It renders frames deterministically on a canvas
 in the browser or in Node, and exports MP4 files in the browser. The
 [web app](https://zhenyuanlu.com/waycine/) and the
-[`@waycine/cli`](https://www.npmjs.com/package/@waycine/cli) command line are
+[`waycine-cli`](https://www.npmjs.com/package/waycine-cli) command line are
 built on it.
 
 ![A race season of seven stops: the route draws itself and every stop shows its card](https://raw.githubusercontent.com/zhenyuanlu/waycine/main/docs/media/demo-race-season.webp)

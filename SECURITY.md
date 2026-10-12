@@ -22,7 +22,7 @@ helps) and which browser or Node.js version you used.
   imported lists, uploaded fonts and the answers of the place-search
   services.
 - The command line: the files it writes and the way it starts ffmpeg.
-- The published packages `waycine` and `@waycine/cli`.
+- The published packages `waycine` and `waycine-cli`.
 
 The web app has no server and no accounts, and it uploads nothing. The
 [Privacy section of the README](README.md#privacy) lists the only network

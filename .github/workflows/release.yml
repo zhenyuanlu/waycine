@@ -48,7 +48,7 @@ jobs:
           engine="$(node -p "require('./packages/waycine/package.json').version")"
           cli="$(node -p "require('./packages/cli/package.json').version")"
           dep="$(node -p "require('./packages/cli/package.json').dependencies.waycine")"
-          echo "tag $TAG, waycine $engine, @waycine/cli $cli (depends on waycine $dep)"
+          echo "tag $TAG, waycine $engine, waycine-cli $cli (depends on waycine $dep)"
           if [ "$TAG" != "v$engine" ] || [ "$cli" != "$engine" ] || [ "$dep" != "$engine" ]; then
             echo "::error::The release tag must be v$engine, and both packages and the CLI's waycine dependency must have the same version."
             exit 1
@@ -86,10 +86,10 @@ jobs:
             npm publish -w waycine --access public
           fi
 
-      - name: Publish @waycine/cli
+      - name: Publish waycine-cli
         run: |
-          if [ -n "$(npm view "@waycine/cli@$VERSION" version 2>/dev/null)" ]; then
-            echo "@waycine/cli@$VERSION is already on npm; skipped"
+          if [ -n "$(npm view "waycine-cli@$VERSION" version 2>/dev/null)" ]; then
+            echo "waycine-cli@$VERSION is already on npm; skipped"
           else
-            npm publish -w @waycine/cli --access public
+            npm publish -w waycine-cli --access public
           fi

@@ -16,7 +16,7 @@ A plain-text copy of this file ships with the web app as
   ported from Pillow. Mediabunny is a dependency that npm installs from its
   own package; `@napi-rs/canvas` is an optional peer dependency that you
   install.
-- **The `@waycine/cli` npm package** depends on `waycine` and
+- **The `waycine-cli` npm package** depends on `waycine` and
   `@napi-rs/canvas` (which contains Skia), both installed by npm. It runs an
   ffmpeg that you install yourself; ffmpeg is never distributed with Waycine.
 - Development tools (TypeScript, Vite, Vitest, Biome, Playwright, axe-core
